@@ -2,5 +2,6 @@
 
 ### Sevices ###
 
-angular.module('app.services', [])
-
+angular.module('app.services', [
+  'jm.i18next'
+])

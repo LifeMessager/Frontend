@@ -3,8 +3,14 @@
 ### Controllers ###
 
 angular.module('app.controllers', [
-  'ngCookies'
-
+  'ng-extra'
+  'jm.i18next'
   'ui.bootstrap'
+  'app.models'
 ])
 
+.controller('HomeCtrl', [
+  '$scope', 'errorAlert'
+  ($scope ,  errorAlert) ->
+    $scope.login = ->
+])

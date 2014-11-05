@@ -23,6 +23,7 @@ angular.module('app', [
       .state('home', {
         url: '/'
         templateUrl: 'partials/home.html'
+        controller: 'HomeCtrl'
       })
 ])
 

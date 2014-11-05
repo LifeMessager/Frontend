@@ -1,3 +1,14 @@
 
-h1 It works!
+.container(style="padding-top: 60px")
+  .jumbotron(style="padding: 30px 30px; border: 0; background: none")
+    h1.text-center
+      | LifeMessager
+      small.text-center(ng-cloak style="display: block; margin-top: 30px; font-size: 35%") {{'copy:home.met_will_meet_again' | i18next}}
 
+  form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()")
+    input.form-control(type="email" required ng-model="email" ng-i18next="[placeholder]copy:home.your_email")
+    button.btn.btn-default(type="submit"
+      ng-cloak
+      ng-disabled="formLogin.$invalid"
+      busybtn="loginPromise"
+      busybtn-text="{{'usual_messages.submitting' | i18next}}") {{'copy:home.start' | i18next}}

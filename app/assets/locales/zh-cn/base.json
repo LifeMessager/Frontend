@@ -1,0 +1,31 @@
+{
+  "usual_messages": {
+    "submitting": "提交中"
+  },
+  "errors": {
+    "format": "${attribute}${message}",
+    "messages": {
+      "invalid": "是无效的",
+      "missing": "不存在",
+      "missing_field": "不能留空",
+      "already_exist": "已经被使用",
+      "request_failed": "网络请求失败，请稍候再试",
+      "get_request_failed": "请求__model_name__信息失败，请稍候再试",
+      "patch_request_failed": "修改__model_name__失败，请稍候再试",
+      "delete_request_failed": "删除__model_name__失败，请稍候再试",
+      "post_request_failed": "创建__model_name__失败，请稍候再试"
+    },
+    "attributes": {
+      "email": "邮箱"
+    },
+
+    "models": {
+      "User": {
+        "name": "用户",
+        "attributes": {
+          "email": "__model_name__邮箱"
+        }
+      }
+    }
+  }
+}
