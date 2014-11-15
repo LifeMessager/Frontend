@@ -1,6 +1,5 @@
 'use strict'
 
-# Declare app level module which depends on filters, and services
 angular.module('app', [
   'ui.router'
   'ngAria'
@@ -24,6 +23,11 @@ angular.module('app', [
         url: '/'
         templateUrl: 'partials/home.html'
         controller: 'HomeCtrl'
+      })
+      .state('home.login', {
+        url: '/login?token'
+        templateUrl: 'partials/home.html'
+        controller: 'HomeCtrl.LoginCtrl'
       })
 ])
 

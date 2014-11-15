@@ -2,6 +2,7 @@
   "home": {
     "met_will_meet_again": "相逢的人会再相逢",
     "your_email": "你的邮箱",
-    "start": "开始使用"
+    "start": "开始使用",
+    "login_mail_send_success": "邮件发送成功，请点击邮件中的链接登录"
   }
 }

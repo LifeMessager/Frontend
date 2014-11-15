@@ -74,7 +74,7 @@ angular.module('app.services')
 
 .filter('i18next', ['$i18next', ($i18next) ->
   filter = (string, options) ->
-    $i18next string, options
+    $i18next string, angular.extend ns: 'base', options
   filter.$stateful = true
   filter
 ])
@@ -83,15 +83,15 @@ angular.module('app.services')
   '$i18next', '$dialog', '$q'
   ($i18next ,  $dialog ,  $q) ->
     alert = _.debounce (resp) ->
-      if resp?.data?.errors?
+      if resp?.data?.errors? and _(resp.data.errors).first()?
         {resource, field, code} = _(resp.data.errors).first()
-        opts = model: resource, attribute: field, message: code
+        opts = model: resource.toLowerCase(), attribute: field, message: code
       else if method = resp?.config?.method?.toLowerCase()
         opts = message: "#{method}_request_failed"
       else
         opts = message: 'request_failed'
       message = $i18next.model opts
-      $dialog.alert {message}
+      $dialog.alert {message, translate: false}
     , 500, leading: true
 
     # 这里的闭包是为了保证将来在生成函数时能够加入一些配置

@@ -8,7 +8,6 @@
   form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()")
     input.form-control(type="email" required ng-model="email" ng-i18next="[placeholder]copy:home.your_email")
     button.btn.btn-default(type="submit"
-      ng-cloak
       ng-disabled="formLogin.$invalid"
       busybtn="loginPromise"
       busybtn-text="{{'usual_messages.submitting' | i18next}}") {{'copy:home.start' | i18next}}

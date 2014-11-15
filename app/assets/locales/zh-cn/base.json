@@ -2,6 +2,7 @@
   "usual_messages": {
     "submitting": "提交中"
   },
+
   "errors": {
     "format": "${attribute}${message}",
     "messages": {
@@ -20,7 +21,7 @@
     },
 
     "models": {
-      "User": {
+      "user": {
         "name": "用户",
         "attributes": {
           "email": "__model_name__邮箱"

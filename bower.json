@@ -31,9 +31,13 @@
     "ng-extra": "bolasblack/ng-extra",
     "args.js": "autographer/args.js#~0.10.5",
     "underscore-extra": "bolasblack/underscore-extra",
-    "ng-i18next": "~0.3.5"
+    "ng-i18next": "~0.3.5",
+    "jstz": "https://bitbucket.org/pellepim/jstimezonedetect/get/1.0.4.zip"
   },
   "overrides": {
+    "jstz": {
+      "main": "jstz.js"
+    },
     "underscore-extra": {
       "dependencies": {
         "lodash": "*"
