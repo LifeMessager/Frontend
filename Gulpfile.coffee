@@ -3,7 +3,6 @@ gulp_if = require 'gulp-if'
 gulp_util = require 'gulp-util'
 gulp_order = require 'gulp-order'
 gulp_concat = require 'gulp-concat'
-gulp_replace = require 'gulp-replace'
 gulp_livereload = require 'gulp-livereload'
 gulp_jade = require 'gulp-jade'
 gulp_coffee = require 'gulp-coffee'
@@ -60,43 +59,48 @@ gulp.task 'assets', ->
   uneditableExts = 'png jpg gif eot ttf woff svg'.split ' '
 
   gulp.src PATHS.assets.src
-    .pipe gulp_if "**/*.+(#{uneditableExts.join '|'})", gulp_replace /{%timestamp%}/g, Date.now()
-    .pipe gulp_if '**/*.jade', gulp_jade(pretty: true).on 'error', gulp_util.log
+    .pipe gulp_if '**/*.jade', gulp_jade(pretty: true, locale: timestamp: Date.now())
     .pipe gulp.dest PATHS.assets.dest
+    .on 'error', gulp_util.log
 
 gulp.task 'partials', ->
   gulp.src PATHS.partials.src
-    .pipe gulp_jade(pretty: true).on 'error', gulp_util.log
+    .pipe gulp_jade(pretty: true)
     .pipe gulp.dest PATHS.partials.dest
+    .on 'error', gulp_util.log
 
 gulp.task 'scripts', ['assets'], ->
   gulp.src PATHS.scripts.src
-    .pipe gulp_coffee().on 'error', gulp_util.log
+    .pipe gulp_coffee()
     .pipe(gulp_order [
       '**/index.js'
       '**/*.js'
     ])
     .pipe gulp_concat 'app.js'
     .pipe gulp.dest PATHS.scripts.dest
+    .on 'error', gulp_util.log
 
 gulp.task 'styles', ['assets'], ->
   gulp.src PATHS.styles.src
-    .pipe gulp_if '**/*.styl', gulp_rework().on 'error', gulp_util.log
+    .pipe gulp_if '**/*.styl', gulp_rework()
     .pipe gulp_concat 'app.css'
     .pipe gulp.dest PATHS.styles.dest
+    .on 'error', gulp_util.log
 
 gulp.task 'vendor', ->
   getVendorFiles().then (vendorFiles) ->
     unless _(vendorFiles.scripts).isEmpty()
       gulp.src vendorFiles.scripts
-        .pipe gulp_if '**/*.coffee', gulp_coffee().on 'error', gulp_util.log
+        .pipe gulp_if '**/*.coffee', gulp_coffee()
         .pipe gulp_concat 'vendor.js'
         .pipe gulp.dest PATHS.scripts.dest
+        .on 'error', gulp_util.log
 
     unless _(vendorFiles.styles).isEmpty()
       gulp.src vendorFiles.styles
         .pipe gulp_concat 'vendor.css'
         .pipe gulp.dest PATHS.styles.dest
+        .on 'error', gulp_util.log
 
     vendorFiles
 
@@ -120,4 +124,3 @@ gulp.task 'watch', ->
 gulp.task 'build', ['assets', 'partials', 'scripts', 'styles', 'vendor']
 
 gulp.task 'default', ['build', 'watch']
-

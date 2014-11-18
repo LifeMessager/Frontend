@@ -14,7 +14,7 @@ angular.module('app', [
 .config([
   '$locationProvider', '$stateProvider', '$urlRouterProvider'
   ($locationProvider ,  $stateProvider ,  $urlRouterProvider) ->
-    $locationProvider.html5Mode(false).hashPrefix("!")
+    $locationProvider.html5Mode(enabled: false).hashPrefix("!")
 
     $urlRouterProvider.otherwise '/'
 
@@ -24,11 +24,19 @@ angular.module('app', [
         templateUrl: 'partials/home.html'
         controller: 'HomeCtrl'
       })
-      .state('home.login', {
+      .state('login', {
         url: '/login?token'
-        templateUrl: 'partials/home.html'
-        controller: 'HomeCtrl.LoginCtrl'
+        templateUrl: 'partials/login.html'
+        controller: 'LoginCtrl'
       })
+])
+
+.run([
+  '$window', '$state', 'Session'
+  ($window ,  $state ,  Session) ->
+    $window._appLogout = ->
+      Session.clean()
+      $state.go 'home'
 ])
 
 angular.element(document).ready ->

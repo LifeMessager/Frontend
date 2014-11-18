@@ -17,12 +17,22 @@ angular.module('app.controllers', [
       _(resp.data.errors).chain().first().pick('field', 'code')
         .isEqual(field: 'email', code: 'missing').value()
 
+    $scope.logged = false
     $scope.login = ->
       $scope.loginPromise = Session.$create(email: $scope.email).catch (resp) ->
         return errorAlert() resp unless isEmailNotExist resp
         User.create(email: $scope.email).$promise
       .catch(errorAlert())
       .then ->
-        $dialog.alert(message: 'copy:home.login_mail_send_success')
+        $scope.logged = true
         return
+])
+
+.controller('LoginCtrl', [
+  '$scope', '$http', '$state', '$stateParams', 'Session', 'User'
+  ($scope ,  $http ,  $state ,  $stateParams ,  Session ,  User) ->
+    {token} = $stateParams
+    $state.go 'home' unless token
+    session = new Session {token}
+    User.get()
 ])

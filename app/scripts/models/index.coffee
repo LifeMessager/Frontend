@@ -4,6 +4,7 @@
 
 angular.module('app.models', [
   'ngResource'
+  'ng-extra.resource'
 ])
 
 .constant('BASE_URL', 'http://be.diary-service.dev/')
@@ -61,52 +62,6 @@ angular.module('app.models', [
           return unless opt.url?
           opt.url = addUrlPrefix opt.url
         $resource url, paramDefaults, actions
-  ])
-])
-
-# 让 $http 的表现和 $resource 的 action 更相似
-.config(['$provide', ($provide) ->
-  $provide.decorator('$http', [
-    '$delegate', '$q', 'BASE_URL'
-    ($http     ,  $q ,  BASE_URL) ->
-      makePromiseLike$resource = (promise, config) ->
-        promise.then((resp) ->
-          config.callbacks?.success? resp.data, resp.headers
-          resp.data
-        , (resp) ->
-          config.callbacks?.error? resp
-          $q.reject resp
-        )
-
-      createShortMethods = ->
-        angular.forEach arguments, (method) ->
-          replacement[method] = (url, config) ->
-            replacement angular.extend(config or {}, {method, url})
-
-      createShortMethodsWithData = ->
-        angular.forEach arguments, (method) ->
-          replacement[method] = (url, data, config) ->
-            replacement angular.extend(config or {}, {method, url, data})
-
-      replacement = (requestConfig) ->
-        unless requestConfig.modelAction
-          return $http requestConfig
-
-        startWithSlashRE = /^\//
-        config = _.clone requestConfig
-        if startWithSlashRE.test config.url
-          config.url = config.url.replace startWithSlashRE, BASE_URL
-        config.url = config.url.replace /\:([^\/]+)/g, (match, $1) ->
-          param = config.params[$1]
-          delete config.params[$1]
-          param or $1
-        makePromiseLike$resource $http(config), config
-
-      createShortMethods('get', 'delete', 'head', 'jsonp')
-      createShortMethodsWithData('post', 'put')
-      replacement.defaults = $http.defaults
-
-      replacement
   ])
 ])
 
