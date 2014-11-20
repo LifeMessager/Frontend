@@ -14,9 +14,9 @@ angular.module('app', [
 .config([
   '$locationProvider', '$stateProvider', '$urlRouterProvider'
   ($locationProvider ,  $stateProvider ,  $urlRouterProvider) ->
-    $locationProvider.html5Mode(enabled: false).hashPrefix("!")
+    $locationProvider.html5Mode(false).hashPrefix("!")
 
-    $urlRouterProvider.otherwise '/'
+    $urlRouterProvider.otherwise '/diaries/'
 
     $stateProvider
       .state('home', {
@@ -28,6 +28,15 @@ angular.module('app', [
         url: '/login?token'
         templateUrl: 'partials/login.html'
         controller: 'LoginCtrl'
+      })
+      .state('diary', {
+        url: '/diaries/{date:[\\d-]{4}-[\\d-]{2}-[\\d-]{2}}'
+        templateUrl: 'partials/diary.html'
+        controller: 'DiaryCtrl'
+        params:
+          date:
+            squash: true
+            value: -> moment().format 'YYYY-MM-DD'
       })
 ])
 

@@ -1,0 +1,27 @@
+
+article.container
+  style(scoped).
+    header {
+      margin-bottom: 50px;
+    }
+    header nav {
+      margin-top: -32px;
+      text-align: center;
+    }
+    header .previous-diary {
+      margin-right: 200px;
+    }
+    .diary-not-exist {
+      margin-top: 100px;
+    }
+
+  header
+    h2.text-center {{date}}
+    nav
+      a.previous-diary(ui-sref="diary({date: previousDate})") {{'copy:diary.previous_diary' | i18next}}
+      a.next-diary(ui-sref="diary({date: nextDate})" ng-style="{visibility: nextDate ? 'visible' : 'hidden'}") {{'copy:diary.next_diary' | i18next}}
+
+  p.text-center.diary-not-exist(ng-show="diaryStatus === 'notExist'")
+    | {{'copy:diary.diary_not_exist' | i18next}}
+
+  section(ng-repeat="note in diary.notes") {{note.content}}

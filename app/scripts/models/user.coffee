@@ -23,7 +23,9 @@ angular.module('app.models')
         unless _(params).isEmpty()
           return fn.apply this, arguments
         return cache if cache
-        cache = fn.apply this, arguments
+        user = fn.apply this, arguments
+        user.$promise.then -> cache = user
+        user
 
     User
 ])

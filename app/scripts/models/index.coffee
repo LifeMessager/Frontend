@@ -7,7 +7,12 @@ angular.module('app.models', [
   'ng-extra.resource'
 ])
 
-.constant('BASE_URL', 'http://be.diary-service.dev/')
+.constant('BASE_URL', do ->
+  if localStorage.dev or location.search.match /dev/
+    '//be.lifemessager.dev/'
+  else
+    '/api/'
+)
 
 .value('defaultActions', {
   query:
