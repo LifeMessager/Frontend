@@ -1,6 +1,6 @@
 .PHONY : watch build test npm bower clean
 
-BIN=`npm bin`
+BIN="`npm bin`"
 
 watch : bower clean
 	@$(BIN)/gulp
