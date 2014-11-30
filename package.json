@@ -27,6 +27,7 @@
     "gulp-util": "^2.2.20",
     "karma": "^0.12.1",
     "lodash": "^2.4.1",
+    "merge-stream": "^0.1.6",
     "q": "^2.0.2",
     "read-components": "^0.6.0",
     "rework": "^0.20.3",

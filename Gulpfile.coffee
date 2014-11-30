@@ -13,6 +13,7 @@ sysPath = require 'path'
 Q = require 'q'
 _ = require 'lodash'
 glob = require 'glob'
+mergeStream = require 'merge-stream'
 readComponents = require 'read-components'
 
 
@@ -41,7 +42,7 @@ getVendorFiles = ->
 
 PATHS = {
   assets:
-    src: 'app/assets/**/*'
+    src: ['app/assets/**/*']
     dest: 'public/'
   partials:
     src: 'app/partials/**/*.jade'
@@ -58,10 +59,19 @@ PATHS = {
 gulp.task 'assets', ->
   uneditableExts = 'png jpg gif eot ttf woff svg'.split ' '
 
-  gulp.src PATHS.assets.src
+  steams = []
+
+  steams.push(gulp.src PATHS.assets.src
     .pipe gulp_if '**/*.jade', gulp_jade(pretty: true, locale: timestamp: Date.now())
-    .pipe gulp.dest PATHS.assets.dest
     .on 'error', gulp_util.log
+    .pipe gulp.dest PATHS.assets.dest
+  )
+
+  steams.push(gulp.src 'bower_components/bootstrap/fonts/**/*'
+    .pipe gulp.dest PATHS.assets.dest + 'fonts/'
+  )
+
+  mergeStream steams...
 
 gulp.task 'partials', ->
   gulp.src PATHS.partials.src

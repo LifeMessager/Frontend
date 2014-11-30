@@ -6,6 +6,10 @@
     "login_mail_send_success": "邮件发送成功，请点击邮件中的链接登录"
   },
   "diary": {
+    "menu": "菜单",
+    "menu_items": {
+      "logout": "登出"
+    },
     "diary_not_exist": "还没日记呢",
     "previous_diary": "前一天",
     "next_diary": "下一天"

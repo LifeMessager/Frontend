@@ -8,7 +8,7 @@ angular.module('app.models', [
 ])
 
 .constant('BASE_URL', do ->
-  if localStorage.dev or location.search.match /dev/
+  if localStorage.dev or location.hostname.match /dev/
     '//be.lifemessager.dev/'
   else
     '/api/'

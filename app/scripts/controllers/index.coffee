@@ -39,8 +39,8 @@ angular.module('app.controllers', [
 ])
 
 .controller('DiaryCtrl', [
-  '$scope', '$stateParams', '$moment', '$q', 'Diary'
-  ($scope ,  $stateParams ,  $moment ,  $q ,  Diary) ->
+  '$scope', '$stateParams', '$state', '$moment', '$q', 'Session', 'Diary'
+  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  Session ,  Diary) ->
     refreshDateRef = ->
       $scope.previousDate = $moment($scope.date).subtract(1, 'd').format 'YYYY-MM-DD'
       $scope.nextDate = $moment($scope.date).add(1, 'd').format 'YYYY-MM-DD'
@@ -55,6 +55,10 @@ angular.module('app.controllers', [
       .catch (resp) ->
         $scope.diaryStatus = if resp.status is 404 then 'notExist' else 'failed'
         $q.reject resp
+
+    $scope.logout = ->
+      Session.clean()
+      $state.go 'home'
 
     $scope.date = $stateParams.date
 
