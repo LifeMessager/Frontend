@@ -61,10 +61,10 @@ angular.module('app.services')
 ])
 
 .run([
-  '$http', '$moment', 'Session'
-  ($http ,  $moment ,  Session) ->
+  '$http', '$moment', '$jstz', 'Session'
+  ($http ,  $moment ,  $jstz ,  Session) ->
     $http.defaults.headers.common['Timezone'] = ->
-      "#{$moment().toJSON()};;#{jstz.determine().name()}"
+      "#{$moment().toJSON()};;#{$jstz.determine().name()}"
 
     $http.defaults.headers.common['Authorization'] = ->
       storage = Session.restore()

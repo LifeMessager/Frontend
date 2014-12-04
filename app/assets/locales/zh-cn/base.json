@@ -1,6 +1,8 @@
 {
   "usual_messages": {
-    "submitting": "提交中"
+    "submit": "提交",
+    "submitting": "提交中",
+    "cancel": "取消"
   },
 
   "errors": {

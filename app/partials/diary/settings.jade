@@ -1,0 +1,49 @@
+
+style(scoped).
+  .form-group label {
+    font-weight: normal;
+  }
+  .form-control.form-control-inline {
+    padding-left: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  input[type=checkbox].form-control-inline {
+    margin: 10px 0 0 0;
+  }
+
+
+form.form-horizontal(name="settingForm")
+  .modal-header
+    button.close(type="button" ng-click="$dismiss('close')")
+      span(aria-hidden="true") &times;
+      span.sr-only {{'copy:settings.close' | i18next}}
+    .modal-title {{'copy:settings.title' | i18next}}
+
+  .modal-body
+    .form-group
+      span.col-sm-2.control-label {{'copy:settings.form_fields.email' | i18next}}
+      .col-sm-10
+        span.form-control.form-control-inline {{userSnapshot.email}}
+    .form-group
+      label.col-sm-2.control-label {{'copy:settings.form_fields.timezone' | i18next}}
+      .col-sm-10
+        select.form-control(ng-model="userSnapshot.timezone" ng-options="tz.name as tz.displayName for tz in avaliableTimezones" required)
+    .form-group
+      label.col-sm-2.control-label {{'copy:settings.form_fields.alert_time' | i18next}}
+      .col-sm-10
+        select.form-control(ng-model="userSnapshot.alert_time" ng-options="alertTime for alertTime in avaliableAlertTimes" required)
+    .form-group
+      label.col-sm-2.control-label {{'copy:settings.form_fields.subscribe' | i18next}}
+      .col-sm-10
+        input.form-control-inline(type="checkbox" ng-model="userSnapshot.subscribed")
+
+  .modal-footer
+    button.btn.btn-primary(
+      ng-disabled="settingForm.$invalid"
+      busybtn="click"
+      busybtn-text="{{'usual_messages.submitting' | i18next}}"
+      busybtn-handler="submit()"
+    ) {{'usual_messages.submit' | i18next}}
+
+    button.btn.btn-default(ng-click="$dismiss('close')") {{'usual_messages.cancel' | i18next}}
