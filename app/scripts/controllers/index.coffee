@@ -6,6 +6,7 @@ angular.module('app.controllers', [
   'ng-extra'
   'jm.i18next'
   'ui.bootstrap'
+  'monospaced.elastic'
   'app.models'
 ])
 
@@ -66,6 +67,17 @@ angular.module('app.controllers', [
         controller: 'SettingsCtrl'
       )
 
+    $scope.newNote = ->
+      $modal.open(
+        templateUrl: 'partials/diary/new_note.html'
+        controller: 'NotesCtrl.NewCtrl'
+      ).result.then (note) ->
+        if _($scope.diary?.notes).isArray()
+          $scope.diary.notes.push note
+        else
+          refreshDiaryData()
+        note
+
     $scope.date = $stateParams.date
 
     # 可选值 loading, loaded, failed, notExist
@@ -113,4 +125,12 @@ angular.module('app.controllers', [
 
     user.$promise.then (user) ->
       $scope.userSnapshot = angular.clean user
+])
+
+.controller('NotesCtrl.NewCtrl', [
+  '$scope', 'Note'
+  ($scope ,  Note) ->
+    $scope.submit = ->
+      return unless $scope.content
+      Note.create(content: $scope.content).$promise.then $scope.$close
 ])

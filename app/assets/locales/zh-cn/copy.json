@@ -24,5 +24,12 @@
       "timezone": "时区",
       "subscribe": "每日邮件"
     }
+  },
+  "new_note": {
+    "title": "添加日记",
+    "close": "关闭",
+    "form_fields": {
+      "content": "日记内容"
+    }
   }
 }

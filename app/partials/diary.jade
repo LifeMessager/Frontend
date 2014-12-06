@@ -20,16 +20,16 @@ article.container
       right: 12px;
       font-size: 20px;
     }
-    .menu .menu-trigger {
+    .menu a {
       padding: 10px;
       color: #aeaeae;
       text-decoration: none;
     }
-    .menu .menu-trigger:hover,
-    .menu.open .menu-trigger {
+    .account-actions .dropdown-toggle:hover,
+    .account-actions.open .dropdown-toggle {
       background: #eaeaea;
     }
-    .menu .dropdown-menu {
+    .account-actions .dropdown-menu {
       left: auto;
       right: 0;
       min-width: 0;
@@ -42,12 +42,15 @@ article.container
     nav: ul.list-inline
       li: a.previous-diary(ui-sref="diary({date: previousDate})") {{'copy:diary.previous_diary' | i18next}}
       li: a.next-diary(ui-sref="diary({date: nextDate})" ng-style="{visibility: nextDate ? 'visible' : 'hidden'}") {{'copy:diary.next_diary' | i18next}}
-    .menu.dropdown
-      a.menu-trigger.glyphicon.glyphicon-align-justify.dropdown-toggle(href="javascripts:;")
-        span.sr-only {{'copy:diary.menu' | i18next}}
-      ul.dropdown-menu
-        li: a(href="javascript:;" ng-click="showSettings()") {{'copy:diary.menu_items.settings' | i18next}}
-        li: a(href="javascript:;" ng-click="logout()") {{'copy:diary.menu_items.logout' | i18next}}
+    ul.menu.list-inline
+      li
+        a.glyphicon.glyphicon-plus(href="javascript:;" ng-click="newNote()")
+      li.dropdown.account-actions
+        a.glyphicon.glyphicon-align-justify.dropdown-toggle(href="javascripts:;")
+          span.sr-only {{'copy:diary.menu' | i18next}}
+        ul.dropdown-menu
+          li: a(href="javascript:;" ng-click="showSettings()") {{'copy:diary.menu_items.settings' | i18next}}
+          li: a(href="javascript:;" ng-click="logout()") {{'copy:diary.menu_items.logout' | i18next}}
 
   p.text-center.diary-not-exist(ng-show="diaryStatus === 'notExist'")
     | {{'copy:diary.diary_not_exist' | i18next}}

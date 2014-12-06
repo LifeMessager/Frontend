@@ -32,7 +32,8 @@
     "args.js": "autographer/args.js#~0.10.5",
     "underscore-extra": "bolasblack/underscore-extra",
     "ng-i18next": "~0.3.5",
-    "jstz": "https://bitbucket.org/pellepim/jstimezonedetect/get/1.0.4.zip"
+    "jstz": "https://bitbucket.org/pellepim/jstimezonedetect/get/1.0.4.zip",
+    "angular-elastic": "~2.4.2"
   },
   "overrides": {
     "jstz": {
