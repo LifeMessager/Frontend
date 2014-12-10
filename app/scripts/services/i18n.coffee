@@ -62,7 +62,7 @@ angular.module('app.services')
   '$i18nextProvider'
   ($i18nextProvider) ->
     $i18nextProvider.options = {
-      fallbackLng: 'zh-cn'
+      fallbackLng: 'zh-CN'
       useCookie: false
       useLocalStorage: false
       resGetPath: 'locales/__lng__/__ns__.json'
