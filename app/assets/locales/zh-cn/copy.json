@@ -7,6 +7,7 @@
   },
   "diary": {
     "menu": "菜单",
+    "created_at": "创建时间：",
     "menu_items": {
       "settings": "设置",
       "logout": "登出"
