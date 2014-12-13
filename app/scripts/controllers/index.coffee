@@ -120,7 +120,7 @@ angular.module('app.controllers', [
 
     user = User.getCurrentUser()
     $scope.userSnapshot = null
-    $scope.avaliableAlertTimes = _.range(1, 25).map (hour) -> "#{if hour < 10 then "0" else ""}#{hour}:00"
+    $scope.avaliableAlertTimes = _.range(0, 24).map (hour) -> "#{if hour < 10 then "0" else ""}#{hour}:00"
     $scope.avaliableTimezones = _.map $jstz.olson.timezones, formatTimezoneOffset
 
     user.$promise.then (user) ->
