@@ -10,7 +10,7 @@ angular.module('app.controllers', [
   'app.models'
 ])
 
-.controller('HomeCtrl', [
+.controller('HomeController', [
   '$scope', '$dialog', 'errorAlert', 'Session', 'User'
   ($scope ,  $dialog ,  errorAlert ,  Session ,  User) ->
     isEmailNotExist = (resp) ->
@@ -29,7 +29,7 @@ angular.module('app.controllers', [
         return
 ])
 
-.controller('LoginCtrl', [
+.controller('LoginController', [
   '$scope', '$http', '$state', '$stateParams', 'Session', 'User'
   ($scope ,  $http ,  $state ,  $stateParams ,  Session ,  User) ->
     {token} = $stateParams
@@ -39,7 +39,7 @@ angular.module('app.controllers', [
       $state.go 'diary'
 ])
 
-.controller('DiaryCtrl', [
+.controller('DiaryController', [
   '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', 'Session', 'Diary'
   ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  Session ,  Diary) ->
     refreshDateRef = ->
@@ -64,13 +64,13 @@ angular.module('app.controllers', [
     $scope.showSettings = ->
       $modal.open(
         templateUrl: 'partials/diary/settings.html'
-        controller: 'SettingsCtrl'
+        controller: 'SettingsController'
       )
 
     $scope.newNote = ->
       $modal.open(
         templateUrl: 'partials/diary/new_note.html'
-        controller: 'NotesCtrl.NewCtrl'
+        controller: 'NotesController.NewController'
       ).result.then (note) ->
         if _($scope.diary?.notes).isArray()
           $scope.diary.notes.push note
@@ -89,7 +89,7 @@ angular.module('app.controllers', [
 
 ])
 
-.controller('SettingsCtrl', [
+.controller('SettingsController', [
   '$scope', '$q', '$moment', '$jstz', 'User', 'errorAlert'
   ($scope ,  $q ,  $moment ,  $jstz ,  User ,  errorAlert) ->
     userConfig = (user) ->
@@ -127,7 +127,7 @@ angular.module('app.controllers', [
       $scope.userSnapshot = angular.clean user
 ])
 
-.controller('NotesCtrl.NewCtrl', [
+.controller('NotesController.NewController', [
   '$scope', 'Note'
   ($scope ,  Note) ->
     $scope.submit = ->

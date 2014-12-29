@@ -22,17 +22,17 @@ angular.module('app', [
       .state('home', {
         url: '/'
         templateUrl: 'partials/home.html'
-        controller: 'HomeCtrl'
+        controller: 'HomeController'
       })
       .state('login', {
         url: '/login?token'
         templateUrl: 'partials/login.html'
-        controller: 'LoginCtrl'
+        controller: 'LoginController'
       })
       .state('diary', {
         url: '/diaries/{date:[\\d-]{4}-[\\d-]{2}-[\\d-]{2}}'
         templateUrl: 'partials/diary.html'
-        controller: 'DiaryCtrl'
+        controller: 'DiaryController'
         params:
           date:
             squash: true
