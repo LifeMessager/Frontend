@@ -1,8 +1,8 @@
 angular.module('app.controllers')
 
 .controller('DiaryController', [
-  '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', 'Session', 'Diary'
-  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  Session ,  Diary) ->
+  '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', 'Session', 'User', 'Diary'
+  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  Session ,  User ,  Diary) ->
     refreshDateRef = ->
       $scope.previousDate = $moment($scope.date).subtract(1, 'd').format 'YYYY-MM-DD'
       $scope.nextDate = $moment($scope.date).add(1, 'd').format 'YYYY-MM-DD'
@@ -39,10 +39,15 @@ angular.module('app.controllers')
           refreshDiaryData()
         note
 
+    $scope.user = User.get()
     $scope.date = $stateParams.date
 
     # 可选值 loading, loaded, failed, notExist
     $scope.diaryStatus = 'loading'
+
+    $scope.user.$promise.then (user) ->
+      return unless user.destroyed()
+      $state.go 'deleted'
 
     $scope.$watch 'date', (date) ->
       refreshDateRef()

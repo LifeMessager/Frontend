@@ -38,6 +38,17 @@ angular.module('app', [
             squash: true
             value: -> moment().format 'YYYY-MM-DD'
       })
+      .state('deleted', {
+        url: '/user_deleted'
+        templateUrl: 'partials/user_deleted.html'
+        controller: 'UserDeletedController'
+      })
+])
+
+.run([
+  '$moment'
+  ($moment) ->
+    $moment.locale 'zh-cn'
 ])
 
 .run([

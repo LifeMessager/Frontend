@@ -73,7 +73,7 @@
     "moment": {
       "main": [
         "moment.js",
-        "lang/zh-cn.js"
+        "locale/zh-cn.js"
       ]
     }
   }

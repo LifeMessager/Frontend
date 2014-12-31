@@ -1,8 +1,8 @@
 angular.module('app.controllers')
 
 .controller('SettingsController', [
-  '$scope', '$q', '$moment', '$jstz', 'User', 'errorAlert'
-  ($scope ,  $q ,  $moment ,  $jstz ,  User ,  errorAlert) ->
+  '$scope', '$state', '$q', '$moment', '$jstz', '$dialog', 'User', 'errorAlert'
+  ($scope ,  $state ,  $q ,  $moment ,  $jstz ,  $dialog ,  User ,  errorAlert) ->
     userConfig = (user) ->
       _.pick user, 'timezone', 'alert_time'
 
@@ -28,6 +28,14 @@ angular.module('app.controllers')
         updatePromise = user.$update null, patch
 
       $q.all([subPromise, updatePromise]).catch(errorAlert()).then $scope.$close
+
+    $scope.destroyAccount = ->
+      $dialog.confirm(message: 'copy:settings.confirm_destroy_account').then ->
+        user.$destroy().catch errorAlert()
+      .then ->
+        user.deleted_at = $moment().toJSON()
+        $scope.$dismiss? 'close'
+        $state.go 'deleted'
 
     user = User.getCurrentUser()
     $scope.userSnapshot = null

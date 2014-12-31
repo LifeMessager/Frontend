@@ -19,6 +19,8 @@
   "settings": {
     "title": "设置",
     "close": "关闭",
+    "destroy_account": "删除帐号",
+    "confirm_destroy_account": "确认要删除帐号吗？确认后可以在七天内重新登录取消删除",
     "form_fields": {
       "email": "邮箱地址",
       "alert_time": "提醒时间",
@@ -32,5 +34,11 @@
     "form_fields": {
       "content": "日记内容"
     }
+  },
+  "user_deleted": {
+    "mark_deleted": "此帐号已于 __time__ 被标记删除",
+    "really_deleted": "相关数据将于 __time__ 被彻底清除",
+    "you_can": "你可以",
+    "recover": "取消删除"
   }
 }

@@ -39,6 +39,12 @@ form.form-horizontal(name="settingForm")
         input.form-control-inline(type="checkbox" ng-model="userSnapshot.subscribed")
 
   .modal-footer
+    button.btn.btn-danger.pull-left(
+      busybtn="click"
+      busybtn-text="{{'usual_messages.submitting' | i18next}}"
+      busybtn-handler="destroyAccount()"
+    ) {{'copy:settings.destroy_account' | i18next}}
+
     button.btn.btn-primary(
       ng-disabled="settingForm.$invalid"
       busybtn="click"

@@ -2,8 +2,8 @@
 angular.module('app.models')
 
 .factory('User', [
-  '$resource', '$http', 'argsHolder'
-  ($resource ,  $http ,  argsHolder) ->
+  '$resource', '$http', '$moment', 'argsHolder'
+  ($resource ,  $http ,  $moment ,  argsHolder) ->
     User = $resource(
       '/users/:id'
       {id: '@id'}
@@ -22,6 +22,10 @@ angular.module('app.models')
         method: 'delete'
         headers:
           Authorization: -> "unsubscribe #{User.getCurrentUser().unsubscribe_token}"
+      recover:
+        url: '/users/:id/regain'
+        method: 'post'
+        transformRequest: -> ''
     )
 
     User.languages = [
@@ -56,6 +60,9 @@ angular.module('app.models')
         fn.apply(this, arguments).then (resp) =>
           @subscribed = false
           resp
+
+    User::destroyed = ->
+      @deleted_at and $moment(@deleted_at).isValid()
 
     User
 ])

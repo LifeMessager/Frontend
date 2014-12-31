@@ -1,0 +1,16 @@
+
+.container(style="margin-top: 200px")
+  style(scoped).
+    span.btn {
+      margin: 0 5px;
+    }
+
+  p.text-center {{'copy:user_deleted.mark_deleted' | i18next:{time: mark_delete_time()} }}
+  p.text-center {{'copy:user_deleted.really_deleted' | i18next:{time: really_delete_time()} }}
+  p.text-center
+    | {{'copy:user_deleted.you_can' | i18next}}
+    button.btn.btn-default(
+      busybtn="click"
+      busybtn-text="{{'usual_messages.requesting' | i18next}}"
+      busybtn-handler="recover()"
+    ) {{'copy:user_deleted.recover' | i18next}}

@@ -2,6 +2,7 @@
   "usual_messages": {
     "submit": "提交",
     "submitting": "提交中",
+    "requesting": "请求中",
     "cancel": "取消"
   },
 
