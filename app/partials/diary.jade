@@ -76,6 +76,14 @@ article.container
       background-color: #fff;
     }
 
+    textarea.content {
+      padding: .5em;
+      width: 100%;
+      border: 0;
+      resize: none;
+      background-color: #f5f5f5;
+    }
+
   header
     h2.text-center {{date}}
     nav.date-navigator: ul.list-inline
@@ -91,13 +99,39 @@ article.container
           li: a(href="javascript:;" ng-click="showSettings()") {{'copy:diary.menu_items.settings' | i18next}}
           li: a(href="javascript:;" ng-click="logout()") {{'copy:diary.menu_items.logout' | i18next}}
 
-  p.text-center.diary-not-exist(ng-show="diaryStatus === 'notExist'")
+  p.text-center.diary-not-exist(ng-hide="notes.length")
     | {{'copy:diary.diary_not_exist' | i18next}}
 
-  section.note(ng-repeat="note in diary.notes")
-    .created-at
-      hr
-      span.sr-only {{'copy:diary.created_at' | i18next}}
-      span.sr-only {{note.created_at | moment:'format':'YYYY-MM-DD'}}&nbsp;
-      span.time {{note.created_at | moment:'format':'HH:mm'}}
-    .content(ng-bind-html="note.content | formatNoteContent")
+  section.note(ng-repeat="note in notes")
+    div(ng-if="!note.creating")
+      .created-at
+        hr
+        span.sr-only {{'copy:diary.created_at' | i18next}}
+        span.sr-only {{note.created_at | moment:'format':'YYYY-MM-DD'}}&nbsp;
+        span.time {{note.created_at | moment:'format':'HH:mm'}}
+      .content(ng-bind-html="note.content | formatNoteContent")
+    form(ng-if="note.creating" name="newNoteForm" ng-submit="submitNewNote(note)")
+      .created-at
+        hr
+        span.time(ng-if="note.creating") {{'copy:diary.created_at_now' | i18next}}
+      textarea.content(
+        app-autofocus="note.focus"
+        ng-show="note.creating"
+        row="5"
+        required
+        name="newNoteContent"
+        placeholder="{{'copy:diary.form_fields.content' | i18next}}"
+        ng-model="note.content"
+        msd-elastic
+      )
+      ul.text-right.list-inline
+        li: button.btn.btn-link.btn-serious(
+          type="button"
+          ng-click="deleteNewNote()"
+        ) {{'usual_messages.cancel' | i18next}}
+        li: button.btn.btn-link.btn-serious(
+          type="submit"
+          ng-disabled="newNoteForm.$invalid"
+          busybtn="submittingNewNotePromise"
+          busybtn-text="{{'usual_messages.submitting' | i18next}}"
+        ) {{'usual_messages.submit' | i18next}}

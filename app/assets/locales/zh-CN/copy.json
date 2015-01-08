@@ -8,13 +8,17 @@
   "diary": {
     "menu": "菜单",
     "created_at": "创建时间：",
+    "created_at_now": "现在",
     "menu_items": {
       "settings": "设置",
       "logout": "登出"
     },
     "diary_not_exist": "还没日记呢",
     "previous_diary": "前一天",
-    "next_diary": "下一天"
+    "next_diary": "下一天",
+    "form_fields": {
+      "content": "日记内容"
+    }
   },
   "settings": {
     "title": "设置",
@@ -26,13 +30,6 @@
       "alert_time": "提醒时间",
       "timezone": "时区",
       "subscribe": "每日邮件"
-    }
-  },
-  "new_note": {
-    "title": "添加日记",
-    "close": "关闭",
-    "form_fields": {
-      "content": "日记内容"
     }
   },
   "user_deleted": {

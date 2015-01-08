@@ -1,8 +1,8 @@
 angular.module('app.controllers')
 
 .controller('DiaryController', [
-  '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', 'Session', 'User', 'Diary'
-  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  Session ,  User ,  Diary) ->
+  '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', '$scrollTo', 'Session', 'User', 'Diary', 'Note'
+  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  $scrollTo ,  Session ,  User ,  Diary ,  Note) ->
     refreshDateRef = ->
       $scope.previousDate = $moment($scope.date).subtract(1, 'd').format 'YYYY-MM-DD'
       $scope.nextDate = $moment($scope.date).add(1, 'd').format 'YYYY-MM-DD'
@@ -13,9 +13,15 @@ angular.module('app.controllers')
       Diary.get(date: $scope.date).$promise.then (diary) ->
         $scope.diaryStatus = 'loaded'
         $scope.diary = diary
+        $scope.notes = $scope.diary.notes
         diary
       .catch (resp) ->
-        $scope.diaryStatus = if resp.status is 404 then 'notExist' else 'failed'
+        if resp.status is 404
+          $scope.diary = null
+          $scope.notes = []
+          $scope.diaryStatus = 'loaded'
+        else
+          $scope.diaryStatus = 'failed'
         $q.reject resp
 
     $scope.logout = ->
@@ -29,20 +35,24 @@ angular.module('app.controllers')
       )
 
     $scope.newNote = ->
-      $modal.open(
-        templateUrl: 'partials/diary/new_note.html'
-        controller: 'DiaryController.NewNoteController'
-      ).result.then (note) ->
-        if _($scope.diary?.notes).isArray()
-          $scope.diary.notes.push note
-        else
-          refreshDiaryData()
-        note
+      unless theNewNote = _($scope.notes).find(creating: true)
+        theNewNote = new Note creating: true
+        $scope.notes.push theNewNote
+
+      $scrollTo('#main-container .note:last-child', 300).then ->
+        theNewNote.focus = true
+
+    $scope.deleteNewNote = ->
+      _($scope.notes).remove {creating: true}, destructive: true
+
+    $scope.submitNewNote = (note) ->
+      return unless note.content
+      $scope.submittingNewNotePromise = note.$save().then refreshDiaryData
 
     $scope.user = User.get()
     $scope.date = $stateParams.date
 
-    # 可选值 loading, loaded, failed, notExist
+    # 可选值 loading, loaded, failed
     $scope.diaryStatus = 'loading'
 
     $scope.user.$promise.then (user) ->
@@ -53,12 +63,4 @@ angular.module('app.controllers')
       refreshDateRef()
       refreshDiaryData()
 
-])
-
-.controller('DiaryController.NewNoteController', [
-  '$scope', 'Note'
-  ($scope ,  Note) ->
-    $scope.submit = ->
-      return unless $scope.content
-      Note.create(content: $scope.content).$promise.then $scope.$close
 ])
