@@ -36,11 +36,13 @@ angular.module('app.controllers')
 
     $scope.newNote = ->
       unless theNewNote = _($scope.notes).find(creating: true)
-        theNewNote = new Note creating: true
+        theNewNote = new Note creating: true, focus: true
         $scope.notes.push theNewNote
 
-      $scrollTo('#main-container .note:last-child', 300).then ->
-        theNewNote.focus = true
+      setTimeout ->
+        $scrollTo('#main-container .note:last-child', 200).then ->
+          theNewNote.focus = true
+      , 0
 
     $scope.deleteNewNote = ->
       _($scope.notes).remove {creating: true}, destructive: true
