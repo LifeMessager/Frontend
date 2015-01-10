@@ -7,3 +7,5 @@ angular.module('ui.bootstrap')
       backdrop: true
     }
 ])
+
+angular.module('ui.utils', ['ui.keypress'])

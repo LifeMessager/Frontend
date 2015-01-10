@@ -122,6 +122,7 @@ article.container
         name="newNoteContent"
         placeholder="{{'copy:diary.form_fields.content' | i18next}}"
         ng-model="note.content"
+        ui-keydown="{'meta-enter': 'submitNewNote(note)', 'ctrl-enter': 'submitNewNote(note)'}"
         msd-elastic
       )
       ul.text-right.list-inline

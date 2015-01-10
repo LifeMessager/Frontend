@@ -34,7 +34,8 @@
     "ng-i18next": "~0.3.5",
     "jstz": "https://bitbucket.org/pellepim/jstimezonedetect/get/1.0.4.zip",
     "angular-elastic": "~2.4.2",
-    "jquery.scrollTo": "~1.4.14"
+    "jquery.scrollTo": "~1.4.14",
+    "angular-ui-keypress": "angular-ui/ui-utils#bower-keypress"
   },
   "overrides": {
     "jstz": {
