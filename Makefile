@@ -20,21 +20,21 @@ test :
 npm :
 	@echo "Check npm package update..."
 	@hash npm || (echo "Install npm first" && exit 1)
-	@CHECK_FILE=package.json STATE_FOLDER=node_modules sh scripts/update_manager.sh check; \
+	@CHECK_FILE=package.json STATE_FOLDER=node_modules bash scripts/update_manager.sh check; \
 	if [ $$? -eq 1 ]; then \
 		npm install \
 		&& npm update \
-		&& CHECK_FILE=package.json STATE_FOLDER=node_modules sh scripts/update_manager.sh update \
+		&& CHECK_FILE=package.json STATE_FOLDER=node_modules bash scripts/update_manager.sh update \
 		; \
 	fi
 
 bower : npm
 	@echo "Check bower package update..."
-	@CHECK_FILE=bower.json STATE_FOLDER=bower_components sh scripts/update_manager.sh check; \
+	@CHECK_FILE=bower.json STATE_FOLDER=bower_components bash scripts/update_manager.sh check; \
 	if [ $$? -eq 1 ]; then \
 		$(BIN)/bower install \
 		&& $(BIN)/bower update \
-		&& CHECK_FILE=bower.json STATE_FOLDER=bower_components sh scripts/update_manager.sh update \
+		&& CHECK_FILE=bower.json STATE_FOLDER=bower_components bash scripts/update_manager.sh update \
 		; \
 	fi
 
