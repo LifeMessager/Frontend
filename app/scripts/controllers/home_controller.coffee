@@ -13,7 +13,9 @@ angular.module('app.controllers')
       $scope.loginPromise = Session.$create(email: $scope.email).catch (resp) ->
         return errorAlert() resp unless isEmailNotExist resp
         User.create(email: $scope.email).$promise
-      .catch(errorAlert())
+      .catch (resp) ->
+        delete $scope.loginPromise
+        errorAlert() resp
       .then ->
         $scope.logged = true
         return

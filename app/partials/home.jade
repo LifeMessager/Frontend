@@ -7,7 +7,10 @@
 
   p.text-center(ng-show="logged") {{'copy:home.login_mail_send_success' | i18next}}
   form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()" ng-hide="logged")
-    input.form-control(type="email" required ng-model="email" ng-i18next="[placeholder]copy:home.your_email")
+    input.form-control(type="email" required
+      ng-disabled="loginPromise"
+      ng-model="email"
+      ng-i18next="[placeholder]copy:home.your_email")
     button.btn.btn-default(type="submit"
       ng-disabled="formLogin.$invalid"
       busybtn="loginPromise"
