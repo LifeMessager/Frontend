@@ -62,6 +62,11 @@ angular.module('app.controllers')
     $scope.deleteNewNote = ->
       _($scope.notes).remove {creating: true}, destructive: true
 
+    $scope.deleteEmptyNewNote = (note) ->
+      return unless note.creating
+      return if note.content
+      $scope.deleteNewNote()
+
     $scope.submitNewNote = (note) ->
       return unless note.content
       $scope.submittingNewNotePromise = note.$save().then refreshDiaryData
