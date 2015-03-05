@@ -30,13 +30,13 @@ angular.module('app', [
         controller: 'LoginController'
       })
       .state('diary', {
-        url: '/diaries/{date:[\\d-]{4}-[\\d-]{2}-[\\d-]{2}}'
+        url: '/diaries/{date:date}'
         templateUrl: 'partials/diary.html'
         controller: 'DiaryController'
         params:
           date:
             squash: true
-            value: -> moment().format 'YYYY-MM-DD'
+            value: -> moment().toDate()
       })
       .state('deleted', {
         url: '/user_deleted'

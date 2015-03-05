@@ -1,27 +1,35 @@
 angular.module('app.controllers')
 
 .controller('DiaryController', [
-  '$scope', '$stateParams', '$state', '$moment', '$q', '$modal', '$scrollTo', 'Session', 'User', 'Diary', 'Note'
-  ($scope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  $scrollTo ,  Session ,  User ,  Diary ,  Note) ->
-    refreshDateRef = ->
-      $scope.previousDate = $moment($scope.date).subtract(1, 'd').format 'YYYY-MM-DD'
-      $scope.nextDate = $moment($scope.date).add(1, 'd').format 'YYYY-MM-DD'
+  '$scope', '$rootScope', '$stateParams', '$state', '$moment', '$q', '$modal', '$scrollTo', 'Session', 'User', 'Diary', 'Note'
+  ($scope ,  $rootScope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  $scrollTo ,  Session ,  User ,  Diary ,  Note) ->
+    nextTick = (callback) ->
+      return unless callback?
+      setTimeout callback, 0
+
+    refreshDateNav = ->
+      $scope.previousDate = $moment($scope.date).subtract(1, 'd').toDate()
+      $scope.nextDate = $moment($scope.date).add(1, 'd').toDate()
       $scope.nextDate = null if $moment($scope.nextDate).isAfter $moment()
 
     refreshDiaryData = ->
+      date = $moment($scope.date).format 'YYYY-MM-DD'
       $scope.diaryStatus = 'loading'
-      Diary.get(date: $scope.date).$promise.then (diary) ->
+      Diary.get({date}).$promise.then (diary) ->
         $scope.diaryStatus = 'loaded'
         $scope.diary = diary
         $scope.notes = $scope.diary.notes
+        $scope.loadDiaryDefer.resolve()
         diary
       .catch (resp) ->
         if resp.status is 404
           $scope.diary = null
           $scope.notes = []
           $scope.diaryStatus = 'loaded'
+          $scope.loadDiaryDefer.resolve()
         else
           $scope.diaryStatus = 'failed'
+          $scope.loadDiaryDefer.reject()
         $q.reject resp
 
     $scope.logout = ->
@@ -34,15 +42,22 @@ angular.module('app.controllers')
         controller: 'SettingsController'
       )
 
-    $scope.newNote = ->
-      unless theNewNote = _($scope.notes).find(creating: true)
-        theNewNote = new Note creating: true, focus: true
-        $scope.notes.push theNewNote
+    $scope.newNote = do ->
+      newNote = ->
+        unless theNewNote = _($scope.notes).find(creating: true)
+          theNewNote = new Note creating: true, focus: true
+          $scope.notes.push theNewNote
 
-      setTimeout ->
-        $scrollTo('#main-container .note:last-child', 200).then ->
-          theNewNote.focus = true
-      , 0
+        nextTick ->
+          $scrollTo('#main-container .note:last-child', 200).then ->
+            theNewNote.focus = true
+
+      ->
+        unless isToday = !$scope.nextDate
+          $scope.date = $moment().toDate()
+          nextTick -> $rootScope.$broadcast 'DiaryController:newNote'
+        else
+          $scope.loadDiaryDefer.promise.then newNote
 
     $scope.deleteNewNote = ->
       _($scope.notes).remove {creating: true}, destructive: true
@@ -53,6 +68,9 @@ angular.module('app.controllers')
 
     $scope.user = User.get()
     $scope.date = $stateParams.date
+    $scope.loadDiaryDefer = $q.defer()
+    refreshDateNav()
+    refreshDiaryData()
 
     # 可选值 loading, loaded, failed
     $scope.diaryStatus = 'loading'
@@ -62,7 +80,8 @@ angular.module('app.controllers')
       $state.go 'deleted'
 
     $scope.$watch 'date', (date) ->
-      refreshDateRef()
-      refreshDiaryData()
+      $state.go '.', {date}
+
+    $scope.$on 'DiaryController:newNote', $scope.newNote
 
 ])

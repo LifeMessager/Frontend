@@ -85,7 +85,7 @@ article.container
     }
 
   header
-    h2.text-center {{date}}
+    h2.text-center {{date | date:'yyyy-MM-dd'}}
     nav.date-navigator: ul.list-inline
       li: a.previous-diary(ui-sref="diary({date: previousDate})") {{'copy:diary.previous_diary' | i18next}}
       li: a.next-diary(ui-sref="diary({date: nextDate})" ng-style="{visibility: nextDate ? 'visible' : 'hidden'}") {{'copy:diary.next_diary' | i18next}}
