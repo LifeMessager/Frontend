@@ -8,6 +8,7 @@ gulp_concat = require 'gulp-concat'
 gulp_replace = require 'gulp-replace'
 gulp_connect = require 'gulp-connect'
 gulp_rework = require './scripts/gulp-rework'
+gulp_ngCloak = require 'gulp-angular-cloak'
 gulp_sourceStream = require 'vinyl-source-stream'
 mergeStream = require 'merge-stream'
 es = require 'event-stream'
@@ -64,6 +65,7 @@ gulp.task 'assets', ->
 gulp.task 'partials', ->
   gulp.src PATHS.partials.src
     .pipe gulp_jade(pretty: true).on 'error', gulp_util.log
+    .pipe gulp_ngCloak()
     .pipe gulp.dest PATHS.partials.dest
 
 gulp.task 'scripts', ['assets'], ->

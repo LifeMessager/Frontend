@@ -32,6 +32,7 @@
     "gulp-order": "^1.1.1",
     "gulp-replace": "^0.2.0",
     "gulp-util": "^2.2.20",
+    "gulp-angular-cloak": "0.0.1",
     "karma": "^0.12.32",
     "karma-chrome-launcher": "^0.1.5",
     "karma-coffee-preprocessor": "^0.2.1",
