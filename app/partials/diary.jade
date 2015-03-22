@@ -75,6 +75,11 @@ article.container
       padding: 0 10px;
       background-color: #fff;
     }
+    .content img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
 
     textarea.content {
       padding: .5em;
@@ -100,16 +105,17 @@ article.container
           li: a(href="javascript:;" ng-click="logout()") {{'copy:diary.menu_items.logout' | i18next}}
 
   p.text-center.diary-not-exist(ng-hide="notes.length")
-    | {{'copy:diary.diary_not_exist' | i18next}}
+    | {{::'copy:diary.diary_not_exist' | i18next}}
 
   section.note(ng-repeat="note in notes")
     div(ng-if="!note.creating")
       .created-at
         hr
-        span.sr-only {{'copy:diary.created_at' | i18next}}
-        span.sr-only {{note.created_at | moment:'format':'YYYY-MM-DD'}}&nbsp;
-        span.time {{note.created_at | moment:'format':'HH:mm'}}
-      .content(ng-bind-html="note.content | formatNoteContent")
+        span.sr-only {{::'copy:diary.created_at' | i18next}}
+        span.sr-only {{::note.created_at | moment:'format':'YYYY-MM-DD'}}&nbsp;
+        span.time {{::note.created_at | moment:'format':'HH:mm'}}
+      .content(ng-if="note.type === 'text'" ng-bind-html="note.content | formatNoteContent")
+      .content(ng-if="note.type === 'image'"): img(ng-src="{{::note.content}}")
     form(ng-if="note.creating" name="newNoteForm" ng-submit="submitNewNote(note)")
       .created-at
         hr
