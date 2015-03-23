@@ -16,8 +16,13 @@ rework_inline = require 'rework-plugin-inline'
 rework_references = require 'rework-plugin-references'
 
 mixins = {
-  appearance: (value) ->
+  'appearance': (value) ->
     '-webkit-appearance': value
+
+  'user-select': (value) ->
+    '-webkit-user-select': value
+    '-moz-user-select': value
+    'user-select': value
 }
 
 module.exports = ->
@@ -29,8 +34,8 @@ module.exports = ->
     css = cssWhitespaceCompiler file.contents.toString()
     file.contents = new Buffer(rework(css)
       .use(rework_import
-        path: 'styles/app.styl'
-        base: 'src/'
+        path: 'app/styles/'
+        base: 'app/'
         transform: cssWhitespaceCompiler
       )
       .use rework_vars()

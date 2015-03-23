@@ -45,6 +45,21 @@ angular.module('app', [
       })
 ])
 
+.run([ # 自动设置 html 元素的 class 属性
+  '$rootScope', '$state'
+  ($rootScope ,  $state) ->
+    $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
+      $htmlElem = angular.element 'html'
+      isClassnameCreatedBySelf = (classname) -> /^page-/.test classname
+      oldClassnames = ($htmlElem.attr('class') ? '').split(' ').filter(isClassnameCreatedBySelf).join ' '
+      $htmlElem.removeClass(oldClassnames)
+
+      nestedStates = toState.name.split('.')
+      _.range(nestedStates.length).forEach (index) ->
+        (states = nestedStates.slice 0, index + 1).unshift 'page'
+        $htmlElem.addClass states.join '-'
+])
+
 .run([
   '$moment'
   ($moment) ->

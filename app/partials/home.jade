@@ -1,9 +1,9 @@
 
-.container(style="padding-top: 60px")
-  .jumbotron(style="padding: 30px 30px; border: 0; background: none")
+.container
+  .jumbotron
     h1.text-center
       | LifeMessager
-      small.text-center(ng-cloak style="display: block; margin-top: 30px; font-size: 35%") {{'copy:home.met_will_meet_again' | i18next}}
+      small.text-center {{'copy:home.met_will_meet_again' | i18next}}
 
   p.text-center(ng-show="logged") {{'copy:home.login_mail_send_success' | i18next}}
   form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()" ng-hide="logged")

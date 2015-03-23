@@ -40,7 +40,8 @@ PATHS = {
     src: 'app/**/*.coffee'
     dest: 'public/scripts/'
   styles:
-    src: 'app/**/*.styl'
+    src: ['app/**/*.styl', '!app/**/_*.styl']
+    watch: 'app/**/*.styl'
     dest: 'public/styles/'
 }
 
@@ -112,10 +113,11 @@ gulp.task 'server', ->
   )
 
 gulp.task 'watch', ->
-  _(PATHS).forEach (paths, type) ->
+  _.forEach PATHS, (paths, type) ->
+    watchPath = paths.watch or paths.src
     gulp.task "reload_#{type}", [type], ->
-      gulp.src(paths.src).pipe gulp_connect.reload()
-    gulp.watch paths.src, ["reload_#{type}"]
+      gulp.src(watchPath).pipe gulp_connect.reload()
+    gulp.watch watchPath, ["reload_#{type}"]
 
   gulp.task "reload_vendor", ['vendor'], ->
     gulp.src ["#{PATHS.scripts.dest}/vendor.js", "#{PATHS.scripts.dest}/vendor.css"]
