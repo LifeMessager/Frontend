@@ -3,17 +3,17 @@
   "name": "LifeMessager",
   "description": "",
   "version": "0.0.1",
-  "homepage": "",
+  "homepage": "https://lifemessager.com",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/LifeMessager/Frontend.git"
   },
   "contributors": [],
   "engines": {
     "node": "~0.10"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
+    "lodash": "^3.5.0",
     "q": "^2.0.3"
   },
   "devDependencies": {
@@ -22,30 +22,36 @@
     "coffee-script": "^1.8.0",
     "css-whitespace": "^1.1.1",
     "event-stream": "^3.2.2",
-    "glob": "^3.2.11",
+    "glob": "^5.0.3",
     "gulp": "^3.8.11",
-    "gulp-coffee": "^1.4.3",
+    "gulp-angular-cloak": "0.0.1",
+    "gulp-coffee": "^2.3.1",
     "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
     "gulp-if": "^1.2.5",
-    "gulp-jade": "^0.4.2",
+    "gulp-jade": "^1.0.0",
     "gulp-order": "^1.1.1",
-    "gulp-replace": "^0.2.0",
-    "gulp-util": "^2.2.20",
-    "gulp-angular-cloak": "0.0.1",
+    "gulp-replace": "^0.5.3",
+    "gulp-util": "^3.0.4",
     "karma": "^0.12.32",
     "karma-chrome-launcher": "^0.1.5",
     "karma-coffee-preprocessor": "^0.2.1",
     "karma-mocha": "^0.1.9",
     "karma-phantomjs-launcher": "^0.1.4",
-    "karma-sinon-chai": "^0.2.0",
+    "karma-sinon-chai": "^0.3.0",
     "main-bower-files": "^2.5.0",
     "merge-stream": "^0.1.6",
-    "rework": "^0.20.3",
-    "rework-calc": "^0.2.2",
-    "rework-importer": "^0.3.1",
+    "rework": "^1.0.1",
+    "rework-calc": "^1.1.0",
+    "rework-import": "^2.0.1",
+    "rework-inherit": "^0.2.3",
+    "rework-plugin-colors": "^1.0.3",
+    "rework-plugin-ease": "^1.0.1",
+    "rework-plugin-inline": "^1.0.1",
+    "rework-plugin-mixin": "^1.0.0",
+    "rework-plugin-references": "^1.0.1",
     "rework-shade": "^1.4.3",
-    "rework-vars": "^2.0.3",
+    "rework-vars": "^3.1.1",
     "vinyl-source-stream": "^1.0.0"
   }
 }
