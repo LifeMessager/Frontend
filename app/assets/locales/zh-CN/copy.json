@@ -18,7 +18,8 @@
     "next_diary": "下一天",
     "form_fields": {
       "content": "日记内容"
-    }
+    },
+    "click_to_upload_image": "点击上传图片（最大 2M ，支持 jpg, jpeg, gif, png ）"
   },
   "settings": {
     "title": "设置",

@@ -27,13 +27,15 @@ article.container
         span.time {{::note.created_at | moment:'format':'HH:mm'}}
       .content(ng-if="note.type === 'text'" ng-bind-html="note.content | formatNoteContent")
       .content(ng-if="note.type === 'image'"): img(ng-src="{{::note.content}}")
-    form(ng-if="note.creating" name="newNoteForm" ng-submit="submitNewNote(note)")
+
+    form.create-note(ng-if="note.creating" name="newNoteForm" ng-submit="submitNewNote(note)")
       .created-at
         hr
         span.time(ng-if="note.creating") {{'copy:diary.created_at_now' | i18next}}
-      textarea.content(
+
+      textarea.text-content(
         app-autofocus="note.focus"
-        ng-show="note.creating"
+        ng-if="note.type == 'text'"
         row="5"
         required
         name="newNoteContent"
@@ -42,7 +44,23 @@ article.container
         ui-keydown="{'meta-enter': 'submitNewNote(note)', 'ctrl-enter': 'submitNewNote(note)', 'esc': 'deleteEmptyNewNote(note)'}"
         msd-elastic
       )
-      ul.text-right.list-inline
+      .image-content(ng-if="note.type == 'image'")
+        span.placeholder {{'copy:diary.click_to_upload_image' | i18next}}
+        .uploader(
+          required
+          ng-model="note.content"
+          dropzone
+          dz-multiple="false"
+          dz-clickable="true"
+          dz-page-dropable="true"
+        )
+
+      ul.text-right.list-inline.submit-bar
+        li.pull-left: button.btn.btn-link.btn-serious(
+          type="button"
+          ng-click="toggleNoteType()"
+        ) {{note.type == 'text' ? '图片' : '文字'}}
+
         li: button.btn.btn-link.btn-serious(
           type="button"
           ng-click="deleteNewNote()"

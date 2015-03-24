@@ -59,6 +59,10 @@ angular.module('app.controllers')
         else
           $scope.loadDiaryDefer.promise.then newNote
 
+    $scope.toggleNoteType = ->
+      note = _($scope.notes).find {creating: true}
+      note.type = {text: 'image', image: 'text'}[note.type]
+
     $scope.deleteNewNote = ->
       _($scope.notes).remove {creating: true}, destructive: true
 
