@@ -38,6 +38,7 @@ PATHS = {
     dest: 'public/partials/'
   scripts:
     src: 'app/**/*.coffee'
+    watch: ['app/**/*.coffee', '!app/scripts/vendor.coffee']
     dest: 'public/scripts/'
   styles:
     src: ['app/**/*.styl', '!app/**/_*.styl']
@@ -70,7 +71,7 @@ gulp.task 'partials', ->
     .pipe gulp.dest PATHS.partials.dest
 
 gulp.task 'scripts', ['assets'], ->
-  stream = gulp.src PATHS.scripts.src
+  stream = gulp.src [PATHS.scripts.src, '!app/scripts/vendor.coffee']
     .pipe gulp_order(['**/*.js', '**/index.coffee'])
     .pipe gulp_coffee().on 'error', gulp_util.log
     .pipe gulp_concat('tmp.js')
@@ -90,16 +91,26 @@ gulp.task 'vendor', ->
   vendorFiles = getVendorFiles()
   streams = []
 
+  stream = gulp.src 'app/scripts/vendor.coffee'
+    .pipe gulp_coffee().on 'error', gulp_util.log
+    .pipe gulp_concat('tmp.js')
+    .pipe es.map (data, callback) ->
+      callback null, data.contents.toString()
+  streams.push(browserify(stream).bundle()
+    .pipe gulp_sourceStream('vendor.js')
+    .pipe gulp.dest PATHS.scripts.dest
+  )
+
   unless _(vendorFiles.scripts).isEmpty()
     streams.push(gulp.src vendorFiles.scripts
       .pipe gulp_if '**/*.coffee', gulp_coffee().on 'error', gulp_util.log
-      .pipe gulp_concat 'vendor.js'
+      .pipe gulp_concat 'bower-vendor.js'
       .pipe gulp.dest PATHS.scripts.dest
     )
 
   unless _(vendorFiles.styles).isEmpty()
     streams.push(gulp.src vendorFiles.styles
-      .pipe gulp_concat 'vendor.css'
+      .pipe gulp_concat 'bower-vendor.css'
       .pipe gulp.dest PATHS.styles.dest
     )
 
@@ -120,9 +131,12 @@ gulp.task 'watch', ->
     gulp.watch watchPath, ["reload_#{type}"]
 
   gulp.task "reload_vendor", ['vendor'], ->
-    gulp.src ["#{PATHS.scripts.dest}/vendor.js", "#{PATHS.scripts.dest}/vendor.css"]
-      .pipe gulp_connect.reload()
-  gulp.watch ['bower.json', 'vendor/**/*'], ['reload_vendor']
+    gulp.src([
+      "#{PATHS.scripts.dest}/vendor.js"
+      "#{PATHS.scripts.dest}/bower-vendor.js"
+      "#{PATHS.scripts.dest}/bower-vendor.css"
+    ]).pipe gulp_connect.reload()
+  gulp.watch ['bower.json', 'app/scripts/vendor.coffee', 'vendor/**/*'], ['reload_vendor']
   return
 
 gulp.task 'build', ['assets', 'partials', 'scripts', 'styles', 'vendor']
