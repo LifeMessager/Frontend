@@ -64,7 +64,7 @@ angular.module('app.models', [
         url = addUrlPrefix url
         return $resource(url, paramDefaults, actions) unless actions
         actions = angular.copy actions
-        _(actions).forEach (opt, action) ->
+        _.forEach actions, (opt, action) ->
           return unless opt.url?
           opt.url = addUrlPrefix opt.url
         $resource url, paramDefaults, actions

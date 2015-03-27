@@ -1,11 +1,11 @@
-.PHONY : watch build test npm bower clean
+.PHONY : watch build test npm clean
 
 BIN="`npm bin`"
 
-watch : bower clean
+watch : npm clean
 	@$(BIN)/gulp
 
-build : bower clean
+build : npm clean
 	@$(BIN)/gulp build
 
 publish : build
@@ -25,16 +25,6 @@ npm :
 		npm install \
 		&& npm update \
 		&& CHECK_FILE=package.json STATE_FOLDER=node_modules bash scripts/update_manager.sh update \
-		; \
-	fi
-
-bower : npm
-	@echo "Check bower package update..."
-	@CHECK_FILE=bower.json STATE_FOLDER=bower_components bash scripts/update_manager.sh check; \
-	if [ $$? -eq 1 ]; then \
-		$(BIN)/bower install \
-		&& $(BIN)/bower update \
-		&& CHECK_FILE=bower.json STATE_FOLDER=bower_components bash scripts/update_manager.sh update \
 		; \
 	fi
 
