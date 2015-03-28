@@ -5,8 +5,8 @@
       | LifeMessager
       small.text-center {{'copy:home.met_will_meet_again' | i18next}}
 
-  p.text-center(ng-show="logged") {{'copy:home.login_mail_send_success' | i18next}}
-  form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()" ng-hide="logged")
+  p.text-center(ng-show="message") {{message}}
+  form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()" ng-hide="message")
     input.form-control(type="email" required
       ng-disabled="loginPromise"
       ng-model="email"
