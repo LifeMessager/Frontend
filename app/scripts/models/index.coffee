@@ -8,8 +8,9 @@ angular.module('app.models', [
 ])
 
 .constant('BASE_URL', do ->
-  if localStorage.dev or location.hostname.match /\.dev/
-    '//be.lifemessager.dev/'
+  if localStorage.dev or location.hostname is 'localhost' or location.hostname.match /\.dev/
+    #'//be.lifemessager.dev/'
+    '//dev.lifemessager.com/api/'
   else
     '/api/'
 )
@@ -63,7 +64,7 @@ angular.module('app.models', [
         url = addUrlPrefix url
         return $resource(url, paramDefaults, actions) unless actions
         actions = angular.copy actions
-        _(actions).forEach (opt, action) ->
+        _.forEach actions, (opt, action) ->
           return unless opt.url?
           opt.url = addUrlPrefix opt.url
         $resource url, paramDefaults, actions

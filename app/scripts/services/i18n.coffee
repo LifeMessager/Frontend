@@ -50,7 +50,7 @@ angular.module('jm.i18next')
         tmpl = trans model, "format"
 
         data = _.extend {}, options, attribute: i18nAttr, message: i18nMessage
-        _.template tmpl, data
+        _.template(tmpl) data
 
       $i18next
   ])

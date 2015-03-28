@@ -1,8 +1,5 @@
-'use strict'
 
-### Directives ###
-
-angular.module('app.directives', [])
+angular.module('app.directives')
 
 .directive('appAutofocus', [
   '$parse', '$timeout'

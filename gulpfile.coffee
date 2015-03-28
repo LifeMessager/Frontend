@@ -21,9 +21,10 @@ glob = require 'glob'
 browserify = require 'browserify'
 mainBowerFiles = require 'main-bower-files'
 
-getVendorFiles = ->
-  vendorFiles = mainBowerFiles().concat(glob.sync 'vendor/**/*')
-  _.groupBy vendorFiles, (filepath) ->
+
+groupBowerFiles = ->
+  files = mainBowerFiles()
+  _.groupBy files, (filepath) ->
     switch sysPath.extname filepath
       when '.js', '.coffee' then 'scripts'
       when '.css' then 'styles'
@@ -37,11 +38,14 @@ PATHS = {
     src: 'app/partials/**/*.jade'
     dest: 'public/partials/'
   scripts:
-    src: 'app/**/*.coffee'
+    src: 'app/scripts/**/*.coffee'
     dest: 'public/scripts/'
   styles:
-    src: 'app/**/*.styl'
+    src: 'app/styles/**/*.styl'
     dest: 'public/styles/'
+  vendor:
+    src: 'app/vendor.coffee'
+    dest: 'public/scripts/'
 }
 
 
@@ -72,7 +76,7 @@ gulp.task 'scripts', ['assets'], ->
   stream = gulp.src PATHS.scripts.src
     .pipe gulp_order(['**/*.js', '**/index.coffee'])
     .pipe gulp_coffee().on 'error', gulp_util.log
-    .pipe gulp_concat('tmp.js')
+    .pipe gulp_concat('app_tmp.js')
     .pipe es.map (data, callback) ->
       callback null, data.contents.toString()
   browserify(stream).bundle()
@@ -85,24 +89,35 @@ gulp.task 'styles', ['assets'], ->
     .pipe gulp_concat 'app.css'
     .pipe gulp.dest PATHS.styles.dest
 
-gulp.task 'vendor', ->
-  vendorFiles = getVendorFiles()
+gulp.task 'bower', ->
+  bowerFiles = groupBowerFiles()
   streams = []
 
-  unless _(vendorFiles.scripts).isEmpty()
-    streams.push(gulp.src vendorFiles.scripts
+  unless _(bowerFiles.scripts).isEmpty()
+    streams.push(gulp.src bowerFiles.scripts
       .pipe gulp_if '**/*.coffee', gulp_coffee().on 'error', gulp_util.log
-      .pipe gulp_concat 'vendor.js'
+      .pipe gulp_concat 'bower.js'
       .pipe gulp.dest PATHS.scripts.dest
     )
 
-  unless _(vendorFiles.styles).isEmpty()
-    streams.push(gulp.src vendorFiles.styles
-      .pipe gulp_concat 'vendor.css'
+  unless _(bowerFiles.styles).isEmpty()
+    streams.push(gulp.src bowerFiles.styles
+      .pipe gulp_concat 'bower.css'
       .pipe gulp.dest PATHS.styles.dest
     )
 
   mergeStream streams...
+
+gulp.task 'vendor', ->
+  stream = gulp.src PATHS.vendor.src
+    .pipe gulp_order(['**/*.js', '**/index.coffee'])
+    .pipe gulp_coffee().on 'error', gulp_util.log
+    .pipe gulp_concat('vendor_tmp.js')
+    .pipe es.map (data, callback) ->
+      callback null, data.contents.toString()
+  browserify(stream).bundle()
+    .pipe gulp_sourceStream('vendor.js')
+    .pipe gulp.dest PATHS.vendor.dest
 
 gulp.task 'server', ->
   gulp_connect.server(
@@ -112,17 +127,17 @@ gulp.task 'server', ->
   )
 
 gulp.task 'watch', ->
-  _(PATHS).forEach (paths, type) ->
+  _.forEach PATHS, (paths, type) ->
     gulp.task "reload_#{type}", [type], ->
       gulp.src(paths.src).pipe gulp_connect.reload()
     gulp.watch paths.src, ["reload_#{type}"]
 
-  gulp.task "reload_vendor", ['vendor'], ->
-    gulp.src ["#{PATHS.scripts.dest}/vendor.js", "#{PATHS.scripts.dest}/vendor.css"]
+  gulp.task "reload_bower", ['bower'], ->
+    gulp.src ["#{PATHS.scripts.dest}/bower.js", "#{PATHS.scripts.dest}/bower.css"]
       .pipe gulp_connect.reload()
-  gulp.watch ['bower.json', 'vendor/**/*'], ['reload_vendor']
+  gulp.watch ['bower.json'], ['reload_bower']
   return
 
-gulp.task 'build', ['assets', 'partials', 'scripts', 'styles', 'vendor']
+gulp.task 'build', ['assets', 'partials', 'scripts', 'styles', 'bower', 'vendor']
 
 gulp.task 'default', ['build', 'server', 'watch']

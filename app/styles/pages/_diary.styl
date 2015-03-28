@@ -1,0 +1,104 @@
+.page-diary
+  body.dz-drag-hover
+    opacity: .5
+
+  header
+    nav
+      margin-top: -32px
+      text-align: center
+    .previous-diary
+      margin-right: 200px
+
+  .date-navigator a,
+  .menu a
+    color: #aeaeae
+
+  .diary-not-exist
+    margin-top: 150px
+
+  .menu
+    position: absolute
+    top: 12px
+    right: 12px
+    font-size: 20px
+    a
+      padding: 10px
+      text-decoration: none
+
+  .account-actions .dropdown-toggle:hover,
+  .account-actions.open .dropdown-toggle
+    background: #eaeaea
+  .account-actions .dropdown-menu
+    left: auto
+    right: 5px
+    min-width: 0
+    border-radius: 0
+    box-shadow: none
+
+  .note
+    margin-left: auto
+    margin-right: auto
+    margin-bottom: 50px
+    width: 500px
+
+  .created-at
+    position: relative
+    margin: 30px auto
+    width: 300px
+    text-align: center
+    color: #aeaeae
+    > *
+      user-select: none
+    hr
+      position: absolute
+      top: 50%
+      margin: 0
+      width: 100%
+    .sr-only
+      display: inline-block
+    .time
+      position: relative
+      display: inline-block
+      padding: 0 10px
+      background-color: #fff
+
+  .content img
+    display: block
+    margin: 0 auto
+    max-width: 100%
+
+  .create-note
+    .text-content
+      display: block
+      padding: .5em
+      width: 100%
+      border: 0
+      resize: none
+      background-color: #f5f5f5
+
+    .image-content
+      position: relative
+      background-color: #f5f5f5
+
+      > .placeholder
+        position: absolute
+        top: 50%
+        z-index: 1
+        margin-top: -.5em
+        width: 100%
+        text-align: center
+        line-height: 1
+        opacity: .5
+
+      > .uploader
+        position: relative
+        z-index: 2
+        width: 100%
+        min-height: 54px
+        cursor: pointer
+
+  .dz-preview .dz-image > img
+    width: 100%
+
+  .submit-bar
+    margin-top: 8px
