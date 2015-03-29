@@ -20,7 +20,7 @@ angular.module('app.controllers')
           else
             errorAlert() resp
       .then (data) ->
-        if _(data).trim()
+        if _(data).isString() and _(data).trim()
           message = data
         else
           message = $i18next 'copy:home.login_mail_send_success'
