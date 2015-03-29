@@ -8,8 +8,8 @@ article.container
     ul.menu.list-inline
       li
         a.glyphicon.glyphicon-plus(href="javascript:;" ng-click="newNote()")
-      li.dropdown.account-actions
-        a.glyphicon.glyphicon-align-justify.dropdown-toggle(href="javascripts:;")
+      li.dropdown.account-actions(dropdown)
+        a.glyphicon.glyphicon-align-justify.dropdown-toggle(dropdown-toggle href="javascripts:;")
           span.sr-only {{'copy:diary.menu' | i18next}}
         ul.dropdown-menu
           li: a(href="javascript:;" ng-click="showSettings()") {{'copy:diary.menu_items.settings' | i18next}}

@@ -64,7 +64,7 @@ angular.module('app.controllers')
       note.type = {text: 'image', image: 'text'}[note.type]
 
     $scope.deleteNewNote = ->
-      _($scope.notes).remove {creating: true}, destructive: true
+      _.remove $scope.notes, {creating: true}, destructive: true
 
     $scope.deleteEmptyNewNote = (note) ->
       return unless note.creating
