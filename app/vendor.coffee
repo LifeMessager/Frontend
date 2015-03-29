@@ -21,7 +21,7 @@ require 'angular-sanitize'
 require 'angular-i18n/angular-locale_en.js'
 require 'angular-i18n/angular-locale_zh-hans-cn.js'
 
-require 'angular-bootstrap'
+require 'angular-bootstrap/dist/ui-bootstrap-tpls.js'
 require 'angular-ui-router'
 require 'angular-ui-utils/modules/keypress/keypress.js'
 require 'angular-elastic'

@@ -8,15 +8,15 @@ article.container
     ul.menu.list-inline
       li
         a.glyphicon.glyphicon-plus(href="javascript:;" ng-click="newNote()")
-      li.dropdown.account-actions
-        a.glyphicon.glyphicon-align-justify.dropdown-toggle(href="javascripts:;")
+      li.dropdown.account-actions(dropdown)
+        a.glyphicon.glyphicon-align-justify.dropdown-toggle(dropdown-toggle href="javascripts:;")
           span.sr-only {{'copy:diary.menu' | i18next}}
         ul.dropdown-menu
           li: a(href="javascript:;" ng-click="showSettings()") {{'copy:diary.menu_items.settings' | i18next}}
           li: a(href="javascript:;" ng-click="logout()") {{'copy:diary.menu_items.logout' | i18next}}
 
   p.text-center.diary-not-exist(ng-hide="notes.length")
-    | {{::'copy:diary.diary_not_exist' | i18next}}
+    | {{'copy:diary.diary_not_exist' | i18next}}
 
   section.note(ng-repeat="note in notes")
     div(ng-if="!note.creating")
