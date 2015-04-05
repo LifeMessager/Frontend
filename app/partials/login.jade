@@ -1,9 +1,7 @@
-
-.container(style=" \
-  background: transparent url('images/loading.gif') no-repeat center center; \
-  position: absolute; \
-  top: 0; \
-  right: 0; \
-  bottom: 0; \
-  left: 0; \
-")
+.container(ng-class="{loading: loading}")
+  .heroarena(ng-show="needConfirmKeepSession()")
+    p {{'copy:login.keep_session' | i18next}}
+    p.secondary {{'copy:login.how_to_clean_session' | i18next}}
+    ul.actions
+      li: button.btn.btn-default(ng-click="doNotKeepSession()") {{'copy:login.no' | i18next}}
+      li: button.btn.btn-primary(ng-click="keepSession()") {{'copy:login.yes' | i18next}}

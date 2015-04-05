@@ -30,7 +30,7 @@ PATHS = {
     src: 'app/partials/**/*.jade'
     dest: 'public/partials/'
   scripts:
-    src: 'app/scripts/**/*.coffee'
+    src: 'app/scripts/**/*.+(coffee|js)'
     dest: 'public/scripts/'
   styles:
     src: 'app/styles/**/*.sass'
@@ -67,7 +67,7 @@ gulp.task 'partials', ->
 gulp.task 'scripts', ['assets'], ->
   stream = gulp.src PATHS.scripts.src
     .pipe gulp_order(['**/*.js', '**/index.coffee'])
-    .pipe gulp_coffee().on 'error', gulp_util.log
+    .pipe gulp_if '**/*.coffee', gulp_coffee().on 'error', gulp_util.log
     .pipe gulp_concat('app_tmp.js')
     .pipe es.map (data, callback) ->
       callback null, data.contents.toString()

@@ -8,6 +8,12 @@
       "Registered user overflow": "很抱歉，用户数量达到限制，无法注册新帐号"
     }
   },
+  "login": {
+    "keep_session": "是否记住登录状态？",
+    "how_to_clean_session": "您可以在右上角菜单选择“登出”以清除此状态",
+    "yes": "是",
+    "no": "否"
+  },
   "diary": {
     "menu": "菜单",
     "created_at": "创建时间：",
