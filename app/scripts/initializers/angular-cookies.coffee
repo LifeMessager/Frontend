@@ -1,3 +1,4 @@
+`
 'use strict';
 
 /**
@@ -56,3 +57,4 @@ function $$CookieReaderProvider() {
 }
 
 angular.module('ng').provider('$$cookieReader', $$CookieReaderProvider);
+`
