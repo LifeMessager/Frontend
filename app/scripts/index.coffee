@@ -2,6 +2,7 @@
 
 angular.module('app', [
   'ui.router'
+  'ngRaven'
   'ngAria'
 
   'app.controllers'
@@ -45,6 +46,13 @@ angular.module('app', [
       })
 ])
 
+.run([ # raven-js
+  '$raven', 'User'
+  ($raven ,  User) ->
+    User.get().$promise.then (user) ->
+      $raven.setUser id: user.id, email: user.email
+])
+
 .run([ # 自动设置 html 元素的 class 属性
   '$rootScope', '$state'
   ($rootScope ,  $state) ->
@@ -73,6 +81,8 @@ angular.module('app', [
       Session.clean()
       $state.go 'home'
 ])
+
+Raven.config('{%= RAVEN_DSN %}', {}).install()
 
 angular.element(document).ready ->
   angular.bootstrap(document, ['app'])

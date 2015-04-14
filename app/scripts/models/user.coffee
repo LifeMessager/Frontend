@@ -34,6 +34,14 @@ angular.module('app.models')
       'en'
     ]
 
+    User.wrapStaticMethod 'getCurrentUser', (fn) ->
+      currentUser = null
+      argsHolder 'params', (params = {}, success, error) ->
+        currentUser = null if params.refresh
+        unless currentUser
+          currentUser = fn.apply this, arguments
+        currentUser
+
     User.wrapStaticMethod 'get', (fn) ->
       argsHolder 'params', (params = {}, success, error) ->
         cb = if params.id? then fn else User.getCurrentUser

@@ -10,6 +10,7 @@ gulp_plumber = require 'gulp-plumber'
 gulp_replace = require 'gulp-replace'
 gulp_connect = require 'gulp-connect'
 gulp_ngCloak = require 'gulp-angular-cloak'
+gulp_template = require 'gulp-template'
 gulp_sourcemaps = require 'gulp-sourcemaps'
 gulp_sourceStream = require 'vinyl-source-stream'
 mergeStream = require 'merge-stream'
@@ -41,6 +42,17 @@ PATHS = {
     dest: 'public/scripts/'
 }
 
+tmplData = 'RAVEN_DSN'.split(' ').reduce (memo, envName) ->
+  memo[envName] = process.env[envName] or ''
+  memo
+, {}
+
+tmplOpt = {
+  escape: /{%-([\s\S]+?)%}/g
+  evaluate: /{%([\s\S]+?)%}/g
+  interpolate: /{%=([\s\S]+?)%}/g
+}
+
 
 gulp.task 'assets', ->
   uneditableExts = 'png jpg gif eot ttf woff svg'.split ' '
@@ -49,6 +61,7 @@ gulp.task 'assets', ->
 
   streams.push(gulp.src PATHS.assets.src
     .pipe gulp_if '**/*.jade', gulp_jade(pretty: true, locale: timestamp: Date.now())
+    .pipe gulp_template(tmplData, tmplOpt)
     .pipe gulp.dest PATHS.assets.dest
   )
 
@@ -63,6 +76,7 @@ gulp.task 'partials', ->
     .pipe gulp_plumber()
     .pipe gulp_jade(pretty: true)
     .pipe gulp_ngCloak()
+    .pipe gulp_template(tmplData, tmplOpt)
     .pipe gulp.dest PATHS.partials.dest
 
 gulp.task 'scripts', ['assets'], ->
@@ -70,6 +84,7 @@ gulp.task 'scripts', ['assets'], ->
     .pipe gulp_plumber()
     .pipe gulp_order(['**/*.js', '**/index.coffee'])
     .pipe gulp_coffee()
+    .pipe gulp_template(tmplData, tmplOpt)
     .pipe gulp_concat('app_tmp.js')
     .pipe es.map (data, callback) ->
       callback null, data.contents.toString()
@@ -83,6 +98,7 @@ gulp.task 'styles', ['assets'], ->
     .pipe gulp_sourcemaps.init()
     .pipe gulp_sass(indentedSyntax: true)
     .pipe gulp_sourcemaps.write('./maps')
+    .pipe gulp_template(tmplData, tmplOpt)
     .pipe gulp.dest PATHS.styles.dest
 
 gulp.task 'vendor', ->

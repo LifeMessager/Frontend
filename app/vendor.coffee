@@ -1,6 +1,7 @@
 
 window.jstz = require('jstimezonedetect').jstz
 window.Args = require 'args-js'
+window.Raven = require 'raven-js'
 
 window._ = require 'lodash'
 require('underscore-extra') _
@@ -26,6 +27,7 @@ require 'angular-bootstrap/dist/ui-bootstrap-tpls.js'
 require 'angular-ui-router'
 require 'angular-ui-utils/modules/keypress/keypress.js'
 require 'angular-elastic'
+require 'angular-raven'
 require 'ng-i18next'
 require 'ng-extra'
 require 'ng-extra/lib/resource.js'
