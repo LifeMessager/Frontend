@@ -1,9 +1,9 @@
 
 .container
-  .jumbotron
-    h1.text-center
+  .heroarena
+    h1
       | LifeMessager
-      small.text-center {{'copy:home.met_will_meet_again' | i18next}}
+      small.secondary {{'copy:home.met_will_meet_again' | i18next}}
 
   p.text-center(ng-show="message") {{message}}
   form.text-center.form-inline(novalidate name="formLogin" ng-submit="login()" ng-hide="message")

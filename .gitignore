@@ -12,3 +12,4 @@ test/test-results.xml
 
 public/
 
+.env

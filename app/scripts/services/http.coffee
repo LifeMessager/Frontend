@@ -67,6 +67,6 @@ angular.module('app.services')
       "#{$moment().toJSON()};;#{$jstz.determine().name()}"
 
     $http.defaults.headers.common['Authorization'] = ->
-      storage = Session.restore()
-      "Bearer #{storage}" if storage
+      session = Session.restore()
+      "Bearer #{session.token}" if session?.token?
 ])

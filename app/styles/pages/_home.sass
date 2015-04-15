@@ -7,20 +7,15 @@ html.page-home
   body
     position: relative
 
-  .container
-    padding-top: 100px
-
-  .jumbotron
+  .heroarena
     margin-bottom: 60px
-    padding: 0
     border: 0
-    background: none
 
-    small
-      display: block
+    h1
+      margin-top: 0
+
+    .secondary
       margin-top: 30px
-      font-size: 35%
-      color: #777
 
   nav
     text-align: center
@@ -32,5 +27,6 @@ html.page-home
       color: #777
 
     .list-inline > li
-      padding-left: 15px
-      padding-right: @padding-left
+      $padding: 15
+      padding-left: $padding
+      padding-right: $padding

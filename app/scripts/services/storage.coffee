@@ -8,11 +8,14 @@ angular.module('app.services')
 
     ->
       get: (key) ->
-        localStorage.getItem key
+        result = localStorage.getItem key
+        return unless result?
+        try JSON.parse result
       set: (key, value) ->
-        localStorage.setItem key, value
+        localStorage.setItem key, JSON.stringify value
       del: (key) ->
         localStorage.removeItem key
       forEach: (fn) ->
-        _.forEach localStorage, fn
+        _.keys(localStorage).forEach (key) =>
+          fn? @get(key), key
 ])
