@@ -13,12 +13,6 @@ angular.module('app.models')
         $storage().del key
         return
 
-    save = (session) ->
-      if $moment(session.expired_at).isAfter $moment().add(1, 'day')
-        $storage().set STORAGE_KEY, session
-      else
-        $storage().set TODAY_STORAGE_KEY, session
-
     class Session
       @$create: argsHolder 'params-data', (params, data, success, error) ->
         $http.post '/sessions/emails', data, {params, modelAction: true, callbacks: {success, error}}
@@ -27,6 +21,13 @@ angular.module('app.models')
         clean()
         $storage().get(STORAGE_KEY) or $storage().get(TODAY_STORAGE_KEY)
 
+      @save: (session) ->
+        session = token: session unless _(session).isObject()
+        if $moment(session.expired_at).isAfter $moment().add(1, 'day')
+          $storage().set STORAGE_KEY, session
+        else
+          $storage().set TODAY_STORAGE_KEY, session
+
       @clean: ->
         clean()
         $storage().del STORAGE_KEY
@@ -34,14 +35,14 @@ angular.module('app.models')
 
       constructor: (session) ->
         clean()
-        save session
+        @save session
         angular.copy session, this
         return
 
       $renew: argsHolder 'params', (params, success, error) ->
         options = {params, modelAction: true, callbacks: {success, error}}
         $http.post('/sessions', null, options).then (session) =>
-          save session
+          @save session
           angular.copy session, this
           this
 

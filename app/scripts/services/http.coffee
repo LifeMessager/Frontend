@@ -33,9 +33,9 @@ angular.module('app.services')
         config = _.clone requestConfig
         if startWithSlashRE.test config.url
           config.url = config.url.replace startWithSlashRE, BASE_URL
-        config.url = config.url.replace /\:([^\/]+)/g, (match, $1) ->
-          param = config.params[$1]
-          delete config.params[$1]
+        config.url = config.url.replace /(\:([^\/]+))/g, (match, $1, $2) ->
+          param = config.params[$2]
+          delete config.params[$2]
           param or $1
         makePromiseLike$resource $http(config), config
 

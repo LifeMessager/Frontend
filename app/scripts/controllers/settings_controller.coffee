@@ -37,6 +37,24 @@ angular.module('app.controllers')
         $scope.$dismiss? 'close'
         $state.go 'deleted'
 
+    do ->
+      $scope.editEmailStart = ->
+        $scope.emailEditing = true
+        $scope.targetEmail = user.email
+
+      $scope.editEmailFinish = ($event) ->
+        $event.preventDefault() if $event
+        if $scope.targetEmail isnt user.email
+          $scope.changeEmailPromise = user.$applyChangeEmail(null, email: $scope.targetEmail).then ->
+            $scope.emailEditing = false
+            $scope.changeEmailApplySendSuccess = true
+          .catch errorAlert()
+          .finally ->
+            delete $scope.changeEmailPromise
+
+      $scope.editEmailCancel = ->
+        $scope.emailEditing = false
+
     user = User.getCurrentUser()
     $scope.userSnapshot = null
     $scope.avaliableAlertTimes = _.range(0, 24).map (hour) -> "#{if hour < 10 then "0" else ""}#{hour}:00"

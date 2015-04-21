@@ -1,18 +1,4 @@
 
-style(scoped).
-  .form-group label {
-    font-weight: normal;
-  }
-  .form-control.form-control-inline {
-    padding-left: 0;
-    border-color: transparent;
-    box-shadow: none;
-  }
-  input[type=checkbox].form-control-inline {
-    margin: 10px 0 0 0;
-  }
-
-
 form.form-horizontal(name="settingForm")
   .modal-header
     button.close(type="button" ng-click="$dismiss('close')")
@@ -21,10 +7,26 @@ form.form-horizontal(name="settingForm")
     .modal-title {{'copy:settings.title' | i18next}}
 
   .modal-body
-    .form-group
+    .form-group.email
       span.col-sm-2.control-label {{'copy:settings.form_fields.email' | i18next}}
       .col-sm-10
-        span.form-control.form-control-inline {{userSnapshot.email}}
+        .form-control.form-control-inline(ng-hide="emailEditing")
+          span {{userSnapshot.email}}
+          a.edit(href="javascript:;" ng-click="editEmailStart()"): i.glyphicon.glyphicon-pencil
+          span.email-send-success(ng-show="changeEmailApplySendSuccess") {{'copy:settings.change_email_send_success' | i18next}}
+        .input-group(ng-show="emailEditing")
+          input.form-control(
+            type="email"
+            ng-model="targetEmail"
+            ui-keydown="{esc: 'editEmailCancel()', enter: 'editEmailFinish($event)'}"
+            ng-disabled="changeEmailPromise"
+          )
+          .input-group-addon.btn: button.btn.btn-primary(
+            type="button"
+            ng-click="editEmailFinish()"
+            busybtn="changeEmailPromise"
+            busybtn-text="{{'usual_messages.submitting' | i18next}}"
+          ) {{'usual_messages.submit' | i18next}}
     .form-group
       label.col-sm-2.control-label {{'copy:settings.form_fields.timezone' | i18next}}
       .col-sm-10

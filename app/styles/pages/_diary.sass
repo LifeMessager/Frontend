@@ -102,3 +102,22 @@
 
   .submit-bar
     margin-top: 8px
+
+  [name=settingForm]
+    .form-group label
+      font-weight: normal
+
+    .form-group.email .edit
+      margin-left: 5px
+      font-size: .8em
+      color: $input-color
+
+      &:hover
+        opacity: .5
+
+    .email-send-success
+      @extend .text-success
+      margin-left: 5px
+
+    input[type=checkbox].form-control-inline
+      margin: 10px 0 0 0

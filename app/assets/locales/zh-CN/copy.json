@@ -35,6 +35,7 @@
     "close": "关闭",
     "destroy_account": "删除帐号",
     "confirm_destroy_account": "确认要删除帐号吗？确认后可以在七天内重新登录取消删除",
+    "change_email_send_success": "确认邮件已经发出，请登录新邮箱查收",
     "form_fields": {
       "email": "邮箱地址",
       "alert_time": "提醒时间",
@@ -47,5 +48,9 @@
     "really_deleted": "相关数据将于 __time__ 被彻底清除",
     "you_can": "你可以",
     "recover": "取消删除"
+  },
+  "change_email": {
+    "success": "修改邮箱成功，5 秒后将会跳转回日记界面",
+    "failed": "修改邮箱失败，请稍后刷新页面或者重新发送邮件"
   }
 }

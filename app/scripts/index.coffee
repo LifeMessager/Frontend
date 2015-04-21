@@ -30,6 +30,11 @@ angular.module('app', [
         templateUrl: 'partials/login.html'
         controller: 'LoginController'
       })
+      .state('changeEmail', {
+        url: '/user/email/edit?token'
+        templateUrl: 'partials/change_email.html'
+        controller: 'ChangeEmailController'
+      })
       .state('diary', {
         url: '/diaries/{date:date}'
         templateUrl: 'partials/diary.html'
@@ -47,9 +52,9 @@ angular.module('app', [
 ])
 
 .run([ # raven-js
-  '$raven', 'User'
-  ($raven ,  User) ->
-    User.get().$promise.then (user) ->
+  '$raven', '$rootScope'
+  ($raven ,  $rootScope) ->
+    $rootScope.$on 'model:user:login', (user) ->
       $raven.setUser id: user.id, email: user.email
 ])
 

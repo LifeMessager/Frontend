@@ -1,0 +1,9 @@
+
+style(scoped).
+  .container.loading > * {
+    display: none;
+  }
+
+.container(style="margin-top: 200px" ng-class="{loading: loading}")
+  p.text-center(ng-hide="failed") {{'copy:change_email.success' | i18next}}
+  p.text-center(ng-show="failed") {{'copy:change_email.failed' | i18next}}
