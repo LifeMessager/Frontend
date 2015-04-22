@@ -35,14 +35,14 @@ angular.module('app.models')
 
       constructor: (session) ->
         clean()
-        @save session
+        Session.save session
         angular.copy session, this
         return
 
       $renew: argsHolder 'params', (params, success, error) ->
         options = {params, modelAction: true, callbacks: {success, error}}
         $http.post('/sessions', null, options).then (session) =>
-          @save session
+          Session.save session
           angular.copy session, this
           this
 
