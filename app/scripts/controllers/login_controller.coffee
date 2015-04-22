@@ -8,7 +8,7 @@ angular.module('app.controllers')
     getSession = ->
       {token} = $stateParams
       $state.go 'home' unless token
-      new Session {token}
+      Session.save token
 
     gotoMainPage = ->
       $scope.loading = true
