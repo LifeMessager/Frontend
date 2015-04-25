@@ -26,7 +26,7 @@ angular.module('app', [
         controller: 'HomeController'
       })
       .state('login', {
-        url: '/login?token'
+        url: '/sessions/new?token'
         templateUrl: 'partials/login.html'
         controller: 'LoginController'
       })
