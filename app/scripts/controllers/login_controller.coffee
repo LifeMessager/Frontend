@@ -15,19 +15,26 @@ angular.module('app.controllers')
       User.get().$promise.then ->
         $state.go 'diary'
 
+    $scope.renew = ->
+      $scope.loading = true
+      session.$renew().then gotoMainPage
+
     $scope.needConfirmKeepSession = ->
-      not $cookies.getObject('keepSession')?
+      not $cookies.getObject('keepSession')
 
     $scope.keepSession = ->
       $cookies.putObject 'keepSession', true, expires: cookieExpiredAt
-      $scope.loading = true
-      session.$renew().then gotoMainPage
+      $scope.renew()
 
     $scope.doNotKeepSession = ->
       $cookies.putObject 'keepSession', false, expires: cookieExpiredAt
       gotoMainPage()
 
     session = getSession()
-    unless $scope.needConfirmKeepSession()
+    keepSession = $cookies.getObject('keepSession')
+    return if not keepSession?
+    if keepSession
+      if Session.exist() then gotoMainPage() else $scope.renew()
+    else
       gotoMainPage()
 ])
