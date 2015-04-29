@@ -87,7 +87,8 @@ angular.module('app', [
       $state.go 'home'
 ])
 
-Raven.config('{%= RAVEN_DSN %}', {}).install()
+if ravenDsn = '{%= RAVEN_DSN %}'
+  Raven.config(ravenDsn, {}).install()
 
 angular.element(document).ready ->
   angular.bootstrap(document, ['app'])
