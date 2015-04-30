@@ -17,6 +17,12 @@ angular.module('app.models')
       @$create: argsHolder 'params-data', (params, data, success, error) ->
         $http.post '/sessions/emails', data, {params, modelAction: true, callbacks: {success, error}}
 
+      @exist: (type) ->
+        if type is 'today'
+          $storage().get(TODAY_STORAGE_KEY)?
+        else
+          $storage().get(STORAGE_KEY)?
+
       @restore: ->
         clean()
         $storage().get(STORAGE_KEY) or $storage().get(TODAY_STORAGE_KEY)
