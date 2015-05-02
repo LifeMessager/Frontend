@@ -34,6 +34,7 @@
     "jstimezonedetect": "^1.0.5",
     "lodash": "^3.6.0",
     "moment": "^2.9.0",
+    "mousetrap": "git://github.com/bolasblack/mousetrap.git#add-destroy-method",
     "ng-extra": "git://github.com/bolasblack/ng-extra",
     "ng-i18next": "git://github.com/i18next/ng-i18next",
     "q": "^2.0.3",

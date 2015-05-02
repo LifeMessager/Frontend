@@ -1,8 +1,8 @@
 angular.module('app.controllers')
 
 .controller('DiaryController', [
-  '$scope', '$rootScope', '$stateParams', '$state', '$moment', '$q', '$modal', '$scrollTo', 'Session', 'User', 'Diary', 'Note'
-  ($scope ,  $rootScope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  $scrollTo ,  Session ,  User ,  Diary ,  Note) ->
+  '$scope', '$rootScope', '$stateParams', '$state', '$moment', '$q', '$modal', '$scrollTo', '$kbd', 'Session', 'User', 'Diary', 'Note'
+  ($scope ,  $rootScope ,  $stateParams ,  $state ,  $moment ,  $q ,  $modal ,  $scrollTo ,  $kbd ,  Session ,  User ,  Diary ,  Note) ->
     nextTick = (callback) ->
       return unless callback?
       setTimeout callback, 0
@@ -93,4 +93,16 @@ angular.module('app.controllers')
 
     $scope.$on 'DiaryController:newNote', $scope.newNote
 
+
+
+    $kbd.bind 'c', (event) ->
+      $scope.newNote()
+
+    $kbd.bind 'n', (event) ->
+      return unless $scope.nextDate
+      $state.go 'diary', date: $scope.nextDate
+
+    $kbd.bind 'p', (event) ->
+      return unless $scope.previousDate
+      $state.go 'diary', date: $scope.previousDate
 ])

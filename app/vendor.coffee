@@ -2,6 +2,7 @@
 window.jstz = require('jstimezonedetect').jstz
 window.Args = require 'args-js'
 window.Raven = require 'raven-js'
+window.Mousetrap = require 'mousetrap'
 
 window._ = require 'lodash'
 require('underscore-extra') _
